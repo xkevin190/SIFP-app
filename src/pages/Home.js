@@ -13,15 +13,22 @@ import { Container, Header,Left, Content, Button,Icon, Form, Item, Input, Label,
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = { isShowingText: 'hello word' };
+        this.state = { 
+          isShowingText: 'hello word',
+          users:'',
+          password:''
+        };
       }
 
     helloword = (event) =>{
-        console.log(event)
-        //this.props.logout()
+       const data={
+        users:this.state.user,
+         password:this.state.password
+       }
+       this.props.LogoutActions(data)
    }
     render() {
-        console.log('hello console')
+        console.log('hello', this.props.data)
     return (
         <Container>
         <Header>
@@ -43,11 +50,15 @@ export default class Home extends Component {
           <Form>
             <Item floatingLabel>
               <Label>Username</Label>
-              <Input />
+              <Input onChangeText={(text)=>{this.setState({user:text})}}
+              />
             </Item>
             <Item floatingLabel last>
               <Label>Password</Label>
-              <Input />
+              <Input 
+                onChangeText={(text)=>{this.setState({password:text})}} 
+                secureTextEntry
+              />
             </Item>
           </Form>
           <Button primary full onPress={this.helloword}><Text> Primary </Text></Button>

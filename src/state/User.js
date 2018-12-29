@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 
 export default Map({
-    starter: Map({
+    logout: Map({
         users: '',
         password:''
     }),

@@ -1,21 +1,17 @@
-import {TEST_ACTION} from '../actions/actions';
-import User from '../state/User'
+import {Map} from 'immutable'
 
-const InitialState = User
+setState = (state, newState) => state.mergeDeep(newState);
 
-setState = (payload) => {
-    console.log(payload)
-    User.set(payload)
-} 
+setdata = (state,node,payload) =>   state.set(node , payload)
 
-const test = (state = InitialState, action) => {
+
+const test = (state = Map(), action) => {
   switch (action.type) {
-  case TEST_ACTION: {
-    return action.payload;
+  case 'SETSTATE': {
+    return this.setState(state, action.payload)
   }
   case 'LOGOUT':{
-     console.log('entro aqui')
-     this.setState(action.users)
+    return setdata(state,'logout', action.users)
   }
   default:
     return state;
