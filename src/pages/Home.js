@@ -7,63 +7,29 @@
  */
 
 import React, {Component} from 'react';
-import { Container, Header,Left, Content, Button,Icon, Form, Item, Input, Label,Body,Title,Right,Text  } from 'native-base';
 
+import { Header,Left, Button,Icon, Body,Title,Right } from 'native-base';
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import LoginScreen from './LoginScreen';
+import HomeScreen from './HomeScreen'
+import {
+  Router,
+  Scene
+} from 'react-native-router-flux'
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-          isShowingText: 'hello word',
-          users:'',
-          password:''
-        };
       }
-
-    helloword = (event) =>{
-       const data={
-        users:this.state.user,
-         password:this.state.password
-       }
-       this.props.LogoutActions(data)
-   }
     render() {
-        console.log('hello', this.props.data)
-    return (
-        <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Right>
-        </Header>
-        <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label>Username</Label>
-              <Input onChangeText={(text)=>{this.setState({user:text})}}
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Password</Label>
-              <Input 
-                onChangeText={(text)=>{this.setState({password:text})}} 
-                secureTextEntry
-              />
-            </Item>
-          </Form>
-          <Button primary full onPress={this.helloword}><Text> Primary </Text></Button>
-        </Content>
-      </Container>
+      
+    return ( 
+      <Router>
+        <Scene key='root'>
+            <Scene key='login' component={LoginScreen} title='Login' />
+            <Scene key='home' component={HomeScreen} title='Home' />
+        </Scene>
+      </Router>
     );
   }
 }
