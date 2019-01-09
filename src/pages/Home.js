@@ -7,15 +7,13 @@
  */
 
 import React, {Component} from 'react';
-
-import { Header,Left, Button,Icon, Body,Title,Right } from 'native-base';
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen'
 import {
   Router,
   Scene
 } from 'react-native-router-flux'
+import NavBar from './components/NavBar'
 
 export default class Home extends Component {
     constructor(props) {
@@ -26,8 +24,9 @@ export default class Home extends Component {
     return ( 
       <Router>
         <Scene key='root'>
-            <Scene key='login' component={LoginScreen} title='Login' />
-            <Scene key='home' component={HomeScreen} title='Home' />
+            <Scene key='login' component={LoginScreen} title='Login'  navBar={NavBar} />
+            <Scene key='home' component={HomeScreen} title='Home' navBar={NavBar} />
+            <Scene key='pruebas' component={HomeScreen} title='Pruebas' navBar={NavBar} />
         </Scene>
       </Router>
     );
