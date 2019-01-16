@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen'
+import sections from './Sections'
 import {
   Router,
   Scene
@@ -24,9 +25,9 @@ export default class Home extends Component {
     return ( 
       <Router>
         <Scene key='root'>
-            <Scene key='login' component={LoginScreen} title='Login'  navBar={NavBar} />
+            <Scene key='login' component={LoginScreen} title='Login'  hideNavBar={true} />
             <Scene key='home' component={HomeScreen} title='Home' navBar={NavBar} />
-            <Scene key='pruebas' component={HomeScreen} title='Pruebas' navBar={NavBar} />
+            <Scene key='sections' component={sections} title='secciones' navBar={NavBar} />
         </Scene>
       </Router>
     );

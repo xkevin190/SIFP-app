@@ -23,28 +23,28 @@ export default class LoginScreen extends Component {
        this.props.LogoutActions(data)
    }
     render() {
-    return (
-        <Container>
-            <Content>
-                <Form>
-                    <Item floatingLabel>
-                    <Label>Username</Label>
-                    <Input onChangeText={(text)=>{this.setState({user:text})}}
-                    />
-                    </Item>
-                    <Item floatingLabel last>
-                    <Label>Password</Label>
-                    <Input 
-                        onChangeText={(text)=>{this.setState({password:text})}} 
-                        secureTextEntry
-                    />
-                    </Item>
-                </Form>
-                     
-                    <Button style={styles.dios} primary full onPress={()=>{Actions.push('home')}}><Text>bueno hay vamos</Text></Button>
-            </Content>
-      </Container>
-    );
+        return (
+            <Container>
+                <Content>
+                    <Form>
+                        <Item floatingLabel>
+                        <Label>Username</Label>
+                        <Input onChangeText={(text)=>{this.setState({user:text})}}
+                        />
+                        </Item>
+                        <Item floatingLabel last>
+                        <Label>Password</Label>
+                        <Input 
+                            onChangeText={(text)=>{this.setState({password:text})}} 
+                            secureTextEntry
+                        />
+                        </Item>
+                    </Form>
+                        
+                        <Button style={styles.dios} primary full onPress={()=>{Actions.push('home')}}><Text>bueno hay vamos</Text></Button>
+                </Content>
+        </Container>
+        );
   }
 }
 
