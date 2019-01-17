@@ -9,6 +9,7 @@ import {setState} from './actions/actions'
 
 export default class App extends Component {
   render () {
+    store.dispatch(setState());
     return (
       <Provider store={store}>
         <AppContainer />

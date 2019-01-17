@@ -1,14 +1,9 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 export default Map({
     logout: Map({
         users: '',
         password:''
     }),
-    groupData:Map(
-        {
-            name:'',
-            caracteristicas:''
-        }
-    )
+    groupData:List()
 });

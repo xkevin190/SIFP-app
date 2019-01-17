@@ -12,8 +12,8 @@ export default class DialogForm extends Component {
     onSubmit = (event) => { 
         event.preventDefault()
         this.props.register(
-            'hello',
-             'world'
+            this.state.name,
+            this.state.caracteristicas
            )
         this.props.close()
     }

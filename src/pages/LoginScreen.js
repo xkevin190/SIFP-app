@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { Container,  Content, Button, Form, Item, Input, Label,Text  } from 'native-base';
 import {StyleSheet} from 'react-native';
-import {Actions} from 'react-native-router-flux'
+import {logout} from '../actions/actions'
+import {connect} from 'react-redux'
 
 
 
-export default class LoginScreen extends Component {
+ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -20,9 +21,10 @@ export default class LoginScreen extends Component {
         users:this.state.user,
         password: this.state.password
        }
-       this.props.LogoutActions(data)
+       this.props.logout(data)
    }
     render() {
+        // console.log(this.props)
         return (
             <Container>
                 <Content>
@@ -40,12 +42,22 @@ export default class LoginScreen extends Component {
                         />
                         </Item>
                     </Form> 
-                        <Button style={styles.dios} primary full onPress={()=>{Actions.push('home')}}><Text>bueno hay vamos</Text></Button>
+                        <Button style={styles.dios} primary full onPress={()=>this.props.navigation.navigate('Sections')}><Text>bueno hay vamos</Text></Button>
                 </Content>
         </Container>
         );
   }
 }
+
+const mapStateToProps = (state) => ({
+    state
+  });
+  
+  const mapDispatchToProps = (dispatch) => ({
+    logout:logout
+  });
+  
+  export default connect(mapStateToProps,{logout})(LoginScreen);
 
 
 const styles = StyleSheet.create({

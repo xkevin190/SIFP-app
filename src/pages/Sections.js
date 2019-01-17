@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import FloatButtons from './components/FloatButtons'
 import DialogForm from './components/DialogForm'
 import {jobRegister , logout} from '../actions/actions'
+import {Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import {View} from 'react-native'
 import {connect} from 'react-redux';
+import {validateData} from '../utils/Validator'
 
 class Sections extends Component {
   constructor(props) {
@@ -21,12 +24,34 @@ class Sections extends Component {
    
   }
 
-
   render() {
+    const data = validateData(this.props.jobsGrup)
+    console.log(data)
     return (
       <>
-      <DialogForm modalVisible={this.state.modalVisible} close={this.closeModal} register={this.props.jobRegister} />
-      <FloatButtons  showModal={this.setModalVisible}/>
+        <DialogForm modalVisible={this.state.modalVisible} data={data} close={this.closeModal} register={this.props.jobRegister} />
+          <Container>
+            <Content>
+              {data.map( (seciones, key) =>{
+                return <List key ={key}>
+                  <ListItem thumbnail >
+                    <Body>
+                      <Text>{seciones.name}</Text>
+                      <Text note numberOfLines={1}>{seciones.caracteristicas}</Text>
+                      <Text note numberOfLines={1}>0 Ingregantes</Text>
+                    </Body>
+                    <Right>
+                      <Button transparent>
+                        <Text>View</Text>
+                      </Button>
+                    </Right>
+                  </ListItem>
+                </List>
+              })
+              }  
+            </Content>
+          </Container>
+        <FloatButtons  showModal={this.setModalVisible}/>
       </>
     );
   }
