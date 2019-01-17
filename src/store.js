@@ -13,8 +13,6 @@ if (typeof devToolsExtension === 'function') {
 
 //const composedEnhancer = compose( applyMiddleware(logger), ...enhancerList);
 
-const initStore = () => createStore(rootReducer, applyMiddleware(logger));
+const middleWare = applyMiddleware(logger)(createStore);
 
-module.exports = {
-  initStore
-};
+export default middleWare(rootReducer);

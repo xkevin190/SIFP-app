@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {Modal, Text, TouchableHighlight, View, Alert} from 'react-native';
 import FloatButtons from './components/FloatButtons'
+import DialogForm from './components/DialogForm'
+import {jobRegister , logout} from '../actions/actions'
+import {connect} from 'react-redux';
 
-export default class Sections extends Component {
+class Sections extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
   state = {
     modalVisible: false,
@@ -16,42 +16,29 @@ export default class Sections extends Component {
     this.setState({modalVisible: !this.state.modalVisible});
   }
 
+  closeModal =()=>{
+    this.setState({modalVisible:false})
+   
+  }
+
+
   render() {
     return (
-        <>
-        <View style={{marginTop: 22 , }}>
-        <Modal
-          style={{backgroundColor:'black'}}
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22, width:'50%'}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible();
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-      </View>
+      <>
+      <DialogForm modalVisible={this.state.modalVisible} close={this.closeModal} register={this.props.jobRegister} />
       <FloatButtons  showModal={this.setModalVisible}/>
       </>
     );
   }
 }
 
+
+const mapStateToProps = (data) => ({
+  jobsGrup: data.init.get('groupData')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  register:jobRegister
+});
+
+export default connect(mapStateToProps,{jobRegister, logout})(Sections);

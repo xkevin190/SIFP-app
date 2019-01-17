@@ -39,8 +39,7 @@ export default class LoginScreen extends Component {
                             secureTextEntry
                         />
                         </Item>
-                    </Form>
-                        
+                    </Form> 
                         <Button style={styles.dios} primary full onPress={()=>{Actions.push('home')}}><Text>bueno hay vamos</Text></Button>
                 </Content>
         </Container>

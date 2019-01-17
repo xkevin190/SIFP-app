@@ -5,7 +5,6 @@ import {logout} from '../actions/actions'
 
 class App extends Component {
   render () {
-    console.log(this.props); // eslint-disable-line
     return (
       <Home LogoutActions={this.props.logout} data={this.props.state}  />
     );

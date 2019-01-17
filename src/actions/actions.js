@@ -9,6 +9,16 @@ export function setState() {
   }
 }
 
+export function jobRegister(name, caracteristicas){
+  console.log(name, caracteristicas)
+   return {
+     type:'REGISTER',
+     payload:{
+       name, caracteristicas
+     }
+   }
+}
+
 export function logout(users) {
     return {
       type: 'LOGOUT',

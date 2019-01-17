@@ -5,4 +5,10 @@ export default Map({
         users: '',
         password:''
     }),
+    groupData:Map(
+        {
+            name:'',
+            caracteristicas:''
+        }
+    )
 });

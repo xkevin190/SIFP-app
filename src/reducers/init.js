@@ -13,6 +13,9 @@ const test = (state = Map(), action) => {
   case 'LOGOUT':{
     return setdata(state,'logout', action.users)
   }
+  case 'REGISTER':{
+    return setdata(state, 'groupData', action.payload)
+  }
   default:
     return state;
   }
