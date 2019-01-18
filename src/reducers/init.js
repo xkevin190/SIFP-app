@@ -18,7 +18,7 @@ const test = (state = Map(), action) => {
     return setdata(state,'logout', action.users)
   }
   case 'DATA_SECTIONS':{
-    return setList(state, 'groupData', action.payload)
+    return setdata(state, 'groupData', action.payload)
   }
   default:
     return state;

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet} from 'react-native'
 import { Dialog } from 'react-native-simple-dialogs'
 import { Form, Item, Input, Label,Text, View ,Button } from 'native-base';
-import {setData} from '../../firebase/index'
 
-const setDataBase = new setData()
 
 export default class DialogForm extends Component {   
     state={
@@ -17,7 +14,7 @@ export default class DialogForm extends Component {
            name: this.state.name,
            caracteristicas:this.state.caracteristicas
         }
-        setDataBase.setSections( obj )
+        this.props.register( obj )
         this.props.close()
     }
 

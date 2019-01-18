@@ -10,15 +10,16 @@ var config = {
     messagingSenderId: "813845215873"
   };
 
+
   firebase.initializeApp(config);
 
   const users = firebase.database().ref('users')
   const sections = firebase.database().ref('sections')
 
-  export class getData {
+  export class getData { 
     getDataUser=(callback)=>{
         sections.on('value', function(snapshot) {
-           return callback(snapshot.val())
+           return callback(Object.values(snapshot.val()))
         });    
     }
   }
@@ -31,4 +32,8 @@ var config = {
             ...data
         })
       }
+
+        removeSections=(uid)=>{
+           sections.child(uid).remove()
+        }
   }
