@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import FloatButtons from './components/FloatButtons'
 import DialogForm from './components/DialogForm'
-import {jobRegister , logout} from '../actions/actions'
-import {Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
-import {View} from 'react-native'
+import { sectionsData , logout} from '../actions/actions'
+import {Container, Content, List, ListItem, Text, Body, Right, Button } from 'native-base';
 import {connect} from 'react-redux';
 import {validateData} from '../utils/Validator'
+
 
 class Sections extends Component {
   constructor(props) {
@@ -15,6 +15,11 @@ class Sections extends Component {
     modalVisible: false,
   };
 
+  componentDidMount(){
+    this.props.getData()
+  }
+  
+  
   setModalVisible = () => {
     this.setState({modalVisible: !this.state.modalVisible});
   }
@@ -29,7 +34,7 @@ class Sections extends Component {
     console.log(data)
     return (
       <>
-        <DialogForm modalVisible={this.state.modalVisible} data={data} close={this.closeModal} register={this.props.jobRegister} />
+        <DialogForm modalVisible={this.state.modalVisible} data={data} close={this.closeModal} register={ this.props.getData} />
           <Container>
             <Content>
               {data.map( (seciones, key) =>{
@@ -63,7 +68,9 @@ const mapStateToProps = (data) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  register:jobRegister
+  getData: () => {
+    dispatch(sectionsData())
+  }
 });
 
-export default connect(mapStateToProps,{jobRegister, logout})(Sections);
+export default connect(mapStateToProps, mapDispatchToProps)(Sections);
