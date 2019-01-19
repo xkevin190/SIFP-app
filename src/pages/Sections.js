@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FloatButtons from './components/FloatButtons'
 import DialogForm from './components/DialogForm'
 import { sectionsData , logout} from '../actions/actions'
-import {TouchableOpacity} from 'react-native'
 import {Container, Content, List, ListItem, Text, Body, Right, Button, View } from 'native-base';
 import {connect} from 'react-redux';
 import {validateData} from '../utils/Validator'
