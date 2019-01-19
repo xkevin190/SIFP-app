@@ -10,7 +10,6 @@ export default class FloatButtons extends Component {
   }
 
   render() {
-    console.log(this.props.showModal)
     return (
          <TouchableOpacity onPress={()=>{this.props.showModal()}}
             style={styles.floatButton}> 

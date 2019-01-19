@@ -1,6 +1,7 @@
 import {createStore, compose , applyMiddleware} from 'redux';
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
+import ReduxThunk from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';
 import logger from 'redux-logger'
 
@@ -13,8 +14,6 @@ if (typeof devToolsExtension === 'function') {
 
 //const composedEnhancer = compose( applyMiddleware(logger), ...enhancerList);
 
-const initStore = () => createStore(rootReducer, applyMiddleware(logger));
+const middleWare = applyMiddleware( ReduxThunk,logger)(createStore);
 
-module.exports = {
-  initStore
-};
+export default middleWare(rootReducer);

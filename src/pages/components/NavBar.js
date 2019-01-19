@@ -20,7 +20,6 @@
     };
         
      render() {
-         console.log(this.props.initialRouteParams)
        return (
             <Header>
                 {this.props.initialRouteParams.title !== this.props.title &&

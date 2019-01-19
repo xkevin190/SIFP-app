@@ -28,7 +28,6 @@ export default class CardMenu extends Component {
     return (
             <Container  style={styles.menuContainer}>
               {array.map(inconData =>{
-                  console.log(inconData)
                   return <Image key={inconData.name} source={inconData.url}
                   style={styles.MenuIcon}/>
               })               
