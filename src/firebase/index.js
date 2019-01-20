@@ -33,7 +33,8 @@ var config = {
         })
       }
 
-        removeSections=(uid)=>{
-           sections.child(uid).remove()
-        }
+      removeSections=(uid)=>{
+          sections.child(uid).remove()
+      }
+
   }

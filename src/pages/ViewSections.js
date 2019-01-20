@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {View, StyleSheet } from 'react-native';
 import { Container, Content, List, ListItem, Text, Left, Right, Icon } from 'native-base';
 import FloatButtons from './components/FloatButtons'
-import RegisterIntegrante from './components/RegisterIntegrante'
+import RegisterIntegrante from './components/RegisterIntegrante';
+import {connect} from 'react-redux'
 
-export default class ViewSections extends Component {
+
+class ViewSections extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,10 +24,12 @@ export default class ViewSections extends Component {
   }
 
   render() {
+    const uid= this.props.navigation.state.params
     return (
       <>
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
+           uidSection={uid}
           
         />
         <View 
@@ -65,6 +69,16 @@ export default class ViewSections extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const mapStateToProps = (data) => ({
+  jobsGrup: data.init.get('groupData'),
+  setAction: new setData
+});
 
-})
+const mapDispatchToProps = (dispatch) => ({
+  getData: () => {
+    dispatch(sectionsData())
+  }
+  
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewSections);

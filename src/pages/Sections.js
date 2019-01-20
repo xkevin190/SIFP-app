@@ -39,7 +39,12 @@ class Sections extends Component {
     const data = validateData(this.props.jobsGrup)
     return (
       <>
-        <DialogForm modalVisible={this.state.modalVisible} data={data} close={this.closeModal} register={setAction.setSections} />
+        <DialogForm modalVisible={this.state.modalVisible} 
+          data={data} 
+          close={this.closeModal}
+          register={setAction.setSections}
+          
+        />
           <Container>
             <Content>
               {data.map( (seciones, key) =>{
