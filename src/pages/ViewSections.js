@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, StyleSheet } from 'react-native';
-import { Container, Content, List, ListItem, Text, Left, Right, Icon } from 'native-base';
+import { Container, Content, List, ListItem, Text, Left, Right, Icon, Button } from 'native-base';
 import FloatButtons from './components/FloatButtons'
 import RegisterIntegrante from './components/RegisterIntegrante';
 import {GetDataPerson} from '../utils/Validator'
@@ -57,19 +57,26 @@ class ViewSections extends Component {
             <Content>
               {alumnos.map( (alumno, key)=>{
                 return <List key={key}>
-                  <ListItem  >
+                  <ListItem style={{
+                    borderBottomWidth:0.5
+                  }} >
                     <Left>
                       <Text>{alumno.nombre} {alumno.apellido}</Text>
                     </Left>
                     <Right>
-                      <Icon type="MaterialIcons"  name="arrow-forward" />
+                     <Button  transparent >
+                        <Text style={{color:'blue'}}>View</Text>
+                      </Button>
                     </Right>
                   </ListItem>
                 </List>
               })
               }
             </Content>
-        </Container>
+            {alumnos.length === 0 &&
+            <Text style={{position:'absolute' , top:'40%' , textAlign:'center', paddingHorizontal:20}}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
+            } 
+          </Container>
         <FloatButtons showModal={this.setModalVisible}/>
       </>
      

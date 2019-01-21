@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FloatButtons from './components/FloatButtons'
 import DialogForm from './components/DialogForm'
 import { sectionsData , logout} from '../actions/actions'
-import {Container, Content, List, ListItem, Text, Body, Right, Button, View } from 'native-base';
+import {Container, Content, List, ListItem, Text, Body, Right, Button, View , Icon } from 'native-base';
 import {connect} from 'react-redux';
 import {validateData} from '../utils/Validator'
 import {setData} from '../firebase/index'
@@ -59,9 +59,12 @@ class Sections extends Component {
                       <Text note numberOfLines={1}>{seciones.caracteristicas}</Text>
                       <Text note numberOfLines={1}>0 Ingregantes</Text>
                     </Body>
-                    <Right>
-                      <Button transparent onPress={() =>{setAction.removeSections(seciones.uid) }}>
-                        <Text>View</Text>
+                    <Right style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                      <Button transparent /*onPress={() =>{setAction.removeSections(seciones.uid) }} */>
+                        <Icon  type='MaterialIcons' name='edit'/>
+                      </Button>
+                      <Button transparent /* onPress={() =>{setAction.removeSections(seciones.uid) }}*/>
+                        <Icon  type='MaterialIcons' name='delete'/>
                       </Button>
                     </Right>
                   </ListItem>
