@@ -7,9 +7,12 @@ import AppContainer from './src/routes'
 import {setState} from './src/actions/actions'
 // import navBar from './src/pages/components/NavBar'
 
-console.ignoredYellowBox = ['Setting a timer'];
 
 export default class App extends Component {
+  constructor(){
+    super()
+    console.ignoredYellowBox = ['Setting a timer'];
+  }
   render () {
     store.dispatch(setState());
 

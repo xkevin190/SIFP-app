@@ -19,7 +19,8 @@ var config = {
   export class getData { 
     getDataUser=(callback)=>{
         sections.on('value', function(snapshot) {
-           return callback(Object.values(snapshot.val()))
+            const data = !snapshot.val() ? [] : Object.values(snapshot.val()) 
+            return callback(data)
         });    
     }
   }
@@ -33,7 +34,13 @@ var config = {
         })
       }
 
-        removeSections=(uid)=>{
-           sections.child(uid).remove()
-        }
+      removeSections=(uid)=>{
+          sections.child(uid).remove()
+      }
+
+      setPerson =( uid , object) =>{
+        sections.child(uid+'/alumnos').push({
+            ...object
+        })
+      }
   }

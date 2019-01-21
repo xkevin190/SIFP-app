@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FloatButtons from './components/FloatButtons'
 import DialogForm from './components/DialogForm'
 import { sectionsData , logout} from '../actions/actions'
-import {Container, Content, List, ListItem, Text, Body, Right, Button, View } from 'native-base';
+import {Container, Content, List, ListItem, Text, Body, Right, Button, View , Icon } from 'native-base';
 import {connect} from 'react-redux';
 import {validateData} from '../utils/Validator'
 import {setData} from '../firebase/index'
@@ -17,11 +17,15 @@ class Sections extends Component {
 
   componentDidMount(){
     this.props.getData()
+    
   }
   
-  go(id){
+  go(data, key)
+  {
     this.props.navigation.navigate('ViewSections' ,{
-      itemId:id ,
+      data,
+      key:key,
+      ...this.props.setAction 
     })
   }
   
@@ -39,25 +43,39 @@ class Sections extends Component {
     const data = validateData(this.props.jobsGrup)
     return (
       <>
-        <DialogForm modalVisible={this.state.modalVisible} data={data} close={this.closeModal} register={setAction.setSections} />
+        <DialogForm modalVisible={this.state.modalVisible} 
+          data={data} 
+          close={this.closeModal}
+          register={setAction.setSections}
+          
+        />
           <Container>
             <Content>
               {data.map( (seciones, key) =>{
+             
                return  <List key={seciones.uid}  > 
-                  <ListItem onPress={() =>{this.go(seciones.uid) }} thumbnail button={true} >
+                  <ListItem onPress={() =>{this.go(seciones, key) }} thumbnail button={true} >
                     <Body> 
                       <Text>{seciones.name}</Text>
                       <Text note numberOfLines={1}>{seciones.caracteristicas}</Text>
-                      <Text note numberOfLines={1}>0 Ingregantes</Text>
+                      <Text note numberOfLines={1}>{seciones.alumnos?Object.keys(seciones.alumnos).length: 0} Ingregantes</Text>
                     </Body>
-                    <Right>
-                      <Button transparent onPress={() =>{setAction.removeSections(seciones.uid) }}>
-                        <Text>View</Text>
+                    <Right style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                      <Button transparent /*onPress={() =>{setAction.removeSections(seciones.uid) }} */>
+                        <Icon  type='MaterialIcons' name='edit'/>
+                      </Button>
+                      <Button transparent /* onPress={() =>{setAction.removeSections(seciones.uid) }}*/>
+                        <Icon  type='MaterialIcons' name='delete'/>
                       </Button>
                     </Right>
                   </ListItem>
                 </List>
               })
+              }
+              {data.length === 0 &&
+              <Container>
+                  <Text style={{position:'absolute' , top:'40%' , textAlign:'center' }}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
+              </Container>
               }  
             </Content>
           </Container>
@@ -70,7 +88,7 @@ class Sections extends Component {
 
 const mapStateToProps = (data) => ({
   jobsGrup: data.init.get('groupData'),
-  setAction: new setData
+  setAction: new setData()
 });
 
 const mapDispatchToProps = (dispatch) => ({
