@@ -24,7 +24,7 @@ export default class RegisterIntegrante extends Component {
         sexo:'hombre'
     }
 
-    onSubmit = (event) => { 
+    onSubmit = async (event) => { 
         const obj={
             nombre:this.state.nombre,
             apellido:this.state.apellido,
@@ -34,12 +34,13 @@ export default class RegisterIntegrante extends Component {
             cedula:this.state.cedula,
             sexo:this.state.sexo
         }
-        console.log(obj)
+        
+        await this.props.register(
+            this.props.uidSection,
+            obj
+        )
         this.setState(defaultvalue)
-        // this.props.register( obj )
-        // this.props.close()
-
-
+    
     }
 
     render(){

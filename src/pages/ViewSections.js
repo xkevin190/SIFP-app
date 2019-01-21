@@ -3,8 +3,8 @@ import {View, StyleSheet } from 'react-native';
 import { Container, Content, List, ListItem, Text, Left, Right, Icon } from 'native-base';
 import FloatButtons from './components/FloatButtons'
 import RegisterIntegrante from './components/RegisterIntegrante';
+import {GetDataPerson} from '../utils/Validator'
 import {connect} from 'react-redux'
-
 
 class ViewSections extends Component {
   constructor(props) {
@@ -24,12 +24,15 @@ class ViewSections extends Component {
   }
 
   render() {
-    const uid= this.props.navigation.state.params
+    const params = this.props.navigation.state.params
+    const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
+    console.log('desde alumnos', alumnos)
     return (
       <>
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
-           uidSection={uid}
+           uidSection={params.data.uid}
+           register={params.setPerson}
           
         />
         <View 
@@ -37,30 +40,35 @@ class ViewSections extends Component {
             backgroundColor:'dark-gray',
             minHeight: '20%',
             borderRadius:2,
+            borderBottomWidth:1,
+            borderColor:'#dbead8',
           }}
         >
           <Text style={{ padding:20,fontSize:24}}
-          > Grupo de Trabajo xxxx </Text>
+          > {params.data.name} </Text>
           <Text
             style={{
               paddingHorizontal:20,
               fontSize:14
             }}
-          > esta serian las caracteristicas que ingresa el  </Text>
+          > {params.data.caracteristicas} </Text>
           </View>
           <Container>
-          <Content>
-            <List>
-              <ListItem selected>
-                <Left>
-                  <Text>Simon Mignolet</Text>
-                </Left>
-                <Right>
-                  <Icon type="MaterialIcons"  name="arrow-forward" />
-                </Right>
-              </ListItem>
-            </List>
-          </Content>
+            <Content>
+              {alumnos.map( (alumno, key)=>{
+                return <List key={key}>
+                  <ListItem  >
+                    <Left>
+                      <Text>{alumno.nombre} {alumno.apellido}</Text>
+                    </Left>
+                    <Right>
+                      <Icon type="MaterialIcons"  name="arrow-forward" />
+                    </Right>
+                  </ListItem>
+                </List>
+              })
+              }
+            </Content>
         </Container>
         <FloatButtons showModal={this.setModalVisible}/>
       </>
@@ -70,15 +78,9 @@ class ViewSections extends Component {
 }
 
 const mapStateToProps = (data) => ({
-  jobsGrup: data.init.get('groupData'),
-  setAction: new setData
+  alumnos: data.init.get('groupData')
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getData: () => {
-    dispatch(sectionsData())
-  }
-  
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewSections);
+
+export default connect(mapStateToProps)(ViewSections)

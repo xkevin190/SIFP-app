@@ -17,11 +17,15 @@ class Sections extends Component {
 
   componentDidMount(){
     this.props.getData()
+    
   }
   
-  go(id){
+  go(data, key)
+  {
     this.props.navigation.navigate('ViewSections' ,{
-      itemId:id ,
+      data,
+      key:key,
+      ...this.props.setAction 
     })
   }
   
@@ -49,7 +53,7 @@ class Sections extends Component {
             <Content>
               {data.map( (seciones, key) =>{
                return  <List key={seciones.uid}  > 
-                  <ListItem onPress={() =>{this.go(seciones.uid) }} thumbnail button={true} >
+                  <ListItem onPress={() =>{this.go(seciones, key) }} thumbnail button={true} >
                     <Body> 
                       <Text>{seciones.name}</Text>
                       <Text note numberOfLines={1}>{seciones.caracteristicas}</Text>
@@ -63,6 +67,11 @@ class Sections extends Component {
                   </ListItem>
                 </List>
               })
+              }
+              {data.length === 0 &&
+              <Container>
+                  <Text style={{position:'absolute' , top:'40%' , textAlign:'center' }}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
+              </Container>
               }  
             </Content>
           </Container>
@@ -75,7 +84,7 @@ class Sections extends Component {
 
 const mapStateToProps = (data) => ({
   jobsGrup: data.init.get('groupData'),
-  setAction: new setData
+  setAction: new setData()
 });
 
 const mapDispatchToProps = (dispatch) => ({
