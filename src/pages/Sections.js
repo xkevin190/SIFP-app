@@ -52,12 +52,13 @@ class Sections extends Component {
           <Container>
             <Content>
               {data.map( (seciones, key) =>{
+             
                return  <List key={seciones.uid}  > 
                   <ListItem onPress={() =>{this.go(seciones, key) }} thumbnail button={true} >
                     <Body> 
                       <Text>{seciones.name}</Text>
                       <Text note numberOfLines={1}>{seciones.caracteristicas}</Text>
-                      <Text note numberOfLines={1}>0 Ingregantes</Text>
+                      <Text note numberOfLines={1}>{seciones.alumnos?Object.keys(seciones.alumnos).length: 0} Ingregantes</Text>
                     </Body>
                     <Right style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                       <Button transparent /*onPress={() =>{setAction.removeSections(seciones.uid) }} */>
