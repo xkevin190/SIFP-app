@@ -1,5 +1,7 @@
 import firebase from 'firebase'
+import Calculate from './Fireutils';
 
+ const calculate = new Calculate()
 
 var config = {
     apiKey: "AIzaSyA1xOlfqvy-8CtBzc78SC8yc9ZGG1UVfJA",
@@ -39,8 +41,14 @@ var config = {
       }
 
       setPerson =( uid , object) =>{
-        sections.child(uid+'/alumnos').push({
+        const key = sections.push().key  
+        sections.child(uid+'/alumnos/'+ key).set({
             ...object
+        }).then( async() =>{
+           result = await calculate.getpeso(object)
+           sections.child(uid+'/alumnos/'+ key+'/medidas_antropometricas').set({
+                IMC: result
+            })
         })
       }
   }

@@ -74,7 +74,7 @@ class Sections extends Component {
               }
               {data.length === 0 &&
               <Container>
-                  <Text style={{position:'absolute' , top:'40%' , textAlign:'center' }}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
+                  <Text style={{position:'absolute' , top:'40%' , textAlign:'center', paddingHorizontal:20,}}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
               </Container>
               }  
             </Content>
