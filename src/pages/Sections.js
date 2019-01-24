@@ -64,7 +64,7 @@ class Sections extends Component {
                       <Button transparent /*onPress={() =>{setAction.removeSections(seciones.uid) }} */>
                         <Icon  type='MaterialIcons' name='edit'/>
                       </Button>
-                      <Button transparent /* onPress={() =>{setAction.removeSections(seciones.uid) }}*/>
+                      <Button transparent  onPress={() =>{setAction.removeSections(seciones.uid) }}>
                         <Icon  type='MaterialIcons' name='delete'/>
                       </Button>
                     </Right>

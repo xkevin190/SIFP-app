@@ -1,11 +1,11 @@
-import User from '../state/User'
+import state from '../state/state'
 import { getData } from '../firebase'
 export const TEST_ACTION = 'TEST_ACTION';
 
 export function setState() {
   return {
     type: 'SETSTATE',
-    payload:User
+    payload:state
   }
 }
 
@@ -26,3 +26,15 @@ export function logout(users) {
       users
     }
   }
+
+
+export const getPruebas = (id) => dispatch  =>{
+  get.getDataPrubebas(id, (data) =>{ 
+     dispatch({
+       type:'DATA_PRUEBAS',
+       payload:data
+     })
+   } 
+ )  
+}
+

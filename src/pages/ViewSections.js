@@ -32,13 +32,13 @@ class ViewSections extends Component {
   render() {
     const params = this.props.navigation.state.params
     const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
-    console.log('desde alumnos', alumnos)
     return (
       <>
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
            uidSection={params.data.uid}
            register={params.setPerson}
+           message={this.props.message}
           
         />
         <View 
@@ -91,6 +91,7 @@ class ViewSections extends Component {
 }
 
 const mapStateToProps = (data) => ({
+  message: data.init.get('testMessage'),
   alumnos: data.init.get('groupData')
 });
 

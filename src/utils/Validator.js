@@ -18,11 +18,15 @@ export function GetDataPerson(data, key){
   return  dataContainer
 }
 
+export function TestResultFilter(data, type){
+  data = data? data.toJS()[type] : ''
+  const keys =  data? Object.keys(data): []
+  const contentData =[]
+  keys.map( result =>{
+     contentData.push(data[result])
+  })
 
-
-export default class TestValidator {
-   
-  antropometicasResult(data){
-       
-  } 
+  return contentData
 }
+
+

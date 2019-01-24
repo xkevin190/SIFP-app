@@ -37,7 +37,8 @@ export default class RegisterIntegrante extends Component {
         
         await this.props.register(
             this.props.uidSection,
-            obj
+            obj,
+            this.props.message
         )
         this.setState(defaultvalue)
     

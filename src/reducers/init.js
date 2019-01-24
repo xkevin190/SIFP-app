@@ -20,6 +20,9 @@ const test = (state = Map(), action) => {
   case 'DATA_SECTIONS':{
     return setdata(state, 'groupData', action.payload)
   }
+  case 'DATA_PRUEBAS':{
+    return setdata(state, 'pruebas', action.payload)
+  }
   default:
     return state;
   }
