@@ -24,41 +24,41 @@ export default class ViewResult extends Component {
               
             }}/>
             <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estas pruebas son las Iniciales calculadas al momento del Registro </Text>
-          </View>
+          </View >
           { (this.props.data.length > 0) &&
             this.props.data.map(result =>{
-            return (  
-            <View>
-              <View style={{
-                display:'flex',
-                flexDirection:'row',
-                paddingTop:10
-              }}>
-                <Text style={{paddingRight:10 , fontWeight:'bold'}}>Índice de Masa Corporal (IMC):</Text>
-                <Text style={{paddingRight:20}}>{result.data}</Text>
-              </View>
-              <View style={{
-                display:'flex',
-                flexDirection:'row',
-                paddingTop:10
-              }}>
-                <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
-                <Text style={{paddingRight:20}}>{result.resultado}</Text>
-              </View>
-              <Text style={{
-                display:'flex',
-                flexDirection:'row',
-                paddingTop:10,
-                flexWrap:'wrap'
-              
-              }}>
-                <Text style={{ fontWeight:'bold'}}>Recomendacion:  </Text>
-                <Text>{result.recomendacion}</Text>
-              </Text>
-            </View>
-            )
-          })
-        }
+              return (  
+                <View style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
+                  <View style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    paddingTop:10
+                  }}>
+                    <Text style={{paddingRight:10 , fontWeight:'bold'}}>Índice de Masa Corporal (IMC):</Text>
+                    <Text style={{paddingRight:20}}>{result.data}</Text>
+                  </View>
+                  <View style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    paddingTop:10
+                  }}>
+                    <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
+                    <Text style={{paddingRight:20}}>{result.resultado}</Text>
+                  </View>
+                  <Text style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    paddingTop:10,
+                    flexWrap:'wrap',
+                    marginBottom:15
+                  
+                  }}>
+                    <Text style={{ fontWeight:'bold'}}>Recomendacion:  </Text>
+                    <Text>{result.recomendacion}</Text>
+                  </Text>
+                </View>
+              )
+          })}
        </Content>
     );
   }
