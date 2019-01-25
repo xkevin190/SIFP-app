@@ -5,23 +5,27 @@ import {connect} from 'react-redux'
 import {TestResultFilter} from '../utils/Validator'
 import {getPruebas} from '../actions/actions'
 import ViewResult from './components/ViewResult'
+import PlayTest from './components/PlayTest'
 
 class Alumno extends Component {
   constructor(props) {
     console.ignoredYellowBox = ['Setting a timer'];
     super(props);
     this.state = {
-      selected: "medidas_antropometricas"
+      selected: "medidas_antropometricas",
+      tabSelected:"result"
     };
   }
   componentDidMount(){
     const params = this.props.navigation.state.params.data
     this.props.getData(params.uid)
+    
   }
 
   onValueChange(value) {
     this.setState({
       selected: value
+      
     });
   }
 
@@ -71,22 +75,18 @@ class Alumno extends Component {
         </View>
           <Container style={{padding:20}}>
           
-             <ViewResult data={data}/>
+            {this.state.tabSelected === 'play' && <PlayTest />}
+            {this.state.tabSelected === 'result' && <ViewResult data={data}/>}
         
           </Container>
-          <Footer >
-            <FooterTab style={{backgroundColor:'#eceff1', color:'black'}}>
-              <Button>
-                <Icon name="play" />
+          <Footer style={{position:'absolute' ,bottom:0}}>
+            <FooterTab  style={{backgroundColor:'#eceff1'}}>
+              <Button onPress={()=>this.setState({tabSelected:'play'})}>
+                <Icon  style={{color:this.state.tabSelected === 'play'? 'black':'gray' }} name="play" />
               </Button>
-              <Button>
-                <Icon type='MaterialIcons' name="edit" />
-              </Button>
-              <Button activeTabStyle={{backgroundColor:'green'}} >
-                <Icon type='MaterialIcons' active name="delete" />
-              </Button>
-              <Button>
-                <Icon type='MaterialIcons'  name="assignment" />
+             
+              <Button onPress={()=>this.setState({tabSelected:'result'})}>
+                <Icon  style={{color:this.state.tabSelected === 'result'? 'black':'gray' }} type='MaterialIcons'  name="assignment" />
               </Button>
             </FooterTab>
         </Footer>
