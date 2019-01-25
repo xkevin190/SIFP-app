@@ -26,9 +26,9 @@ export default class ViewResult extends Component {
             <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estas pruebas son las Iniciales calculadas al momento del Registro </Text>
           </View >
           { (this.props.data.length > 0) &&
-            this.props.data.map(result =>{
+            this.props.data.map( (result , key) =>{
               return (  
-                <View style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
+                <View key={key} style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
                   <View style={{
                     display:'flex',
                     flexDirection:'row',
