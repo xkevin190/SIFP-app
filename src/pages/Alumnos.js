@@ -49,7 +49,7 @@ class Alumno extends Component {
           <Picker
             note
             mode="dropdown"
-            style={{ position:'absolute', width: '40%' , top:10, right:20 }}
+            style={{ position:'absolute', width: '50%' , top:10, right:20 }}
             selectedValue={this.state.selected}
             onValueChange={this.onValueChange.bind(this)}
           >
