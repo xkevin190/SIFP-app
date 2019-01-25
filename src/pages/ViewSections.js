@@ -23,16 +23,22 @@ class ViewSections extends Component {
    
   }
 
+  go(data){
+    this.props.navigation.navigate('AlumnoScreen',{
+      data
+    })
+  }
+
   render() {
     const params = this.props.navigation.state.params
     const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
-    console.log('desde alumnos', alumnos)
     return (
       <>
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
            uidSection={params.data.uid}
            register={params.setPerson}
+           message={this.props.message}
           
         />
         <View 
@@ -64,7 +70,7 @@ class ViewSections extends Component {
                       <Text>{alumno.nombre} {alumno.apellido}</Text>
                     </Left>
                     <Right>
-                     <Button  transparent >
+                     <Button  transparent  onPress={()=>{this.go(alumno)}} >
                         <Text style={{color:'blue'}}>View</Text>
                       </Button>
                     </Right>
@@ -74,7 +80,7 @@ class ViewSections extends Component {
               }
             </Content>
             {alumnos.length === 0 &&
-            <Text style={{position:'absolute' , top:'40%' , textAlign:'center', paddingHorizontal:20}}>no tienes Grupos Agregados porfavor agrea uno para continuar</Text>
+            <Text style={{position:'absolute' , top:'40%' , textAlign:'center', paddingHorizontal:20}}>no tienes integrantes agregados, porfavor agrea uno para continuar</Text>
             } 
           </Container>
         <FloatButtons showModal={this.setModalVisible}/>
@@ -85,6 +91,7 @@ class ViewSections extends Component {
 }
 
 const mapStateToProps = (data) => ({
+  message: data.init.get('testMessage'),
   alumnos: data.init.get('groupData')
 });
 

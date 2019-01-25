@@ -1,5 +1,7 @@
 import firebase from 'firebase'
+import Calculate from './Fireutils';
 
+ const calculate = new Calculate()
 
 var config = {
     apiKey: "AIzaSyA1xOlfqvy-8CtBzc78SC8yc9ZGG1UVfJA",
@@ -15,6 +17,7 @@ var config = {
 
   const users = firebase.database().ref('users')
   const sections = firebase.database().ref('sections')
+  const pruebas = firebase.database().ref('pruebas')
 
   export class getData { 
     getDataUser=(callback)=>{
@@ -22,6 +25,12 @@ var config = {
             const data = !snapshot.val() ? [] : Object.values(snapshot.val()) 
             return callback(data)
         });    
+    }
+
+    getDataPrubebas(id , callback){
+        pruebas.child(id).on('value' ,function(snapshot){
+            return callback(snapshot.val())
+        })
     }
   }
 
@@ -38,9 +47,15 @@ var config = {
           sections.child(uid).remove()
       }
 
-      setPerson =( uid , object) =>{
-        sections.child(uid+'/alumnos').push({
+      setPerson =( uid , object, message) =>{
+        const key = sections.push().key  
+        sections.child(uid+'/alumnos/'+ key).set({
             ...object
+        }).then( async() =>{
+           result = await calculate.getpeso(object, message)
+           pruebas.child(key+'/medidas_antropometricas').set({
+                IMC:result
+            })
         })
       }
   }
