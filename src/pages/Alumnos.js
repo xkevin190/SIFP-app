@@ -6,6 +6,10 @@ import {TestResultFilter} from '../utils/Validator'
 import {getPruebas} from '../actions/actions'
 import ViewResult from './components/ViewResult'
 import PlayTest from './components/PlayTest'
+import CoreFuctions from '../core'
+
+
+const core = new CoreFuctions()
 
 class Alumno extends Component {
   constructor(props) {
@@ -29,17 +33,14 @@ class Alumno extends Component {
     });
   }
 
-
-
   render() {
     const params = this.props.navigation.state.params.data
     const data = TestResultFilter(this.props.DataPruebas, this.state.selected)
-    console.log(data)
+
     return (
       <>
         <View 
           style={{
-            minHeight: '24%',
             borderRadius:2,
             borderBottomWidth:1,
             borderColor:'#dbead8',
@@ -60,25 +61,28 @@ class Alumno extends Component {
             <Picker.Item label="Test de Equilibrio" value="key4" />
             <Picker.Item label="Todos los Resultados" value="key5" />
           </Picker>
-          <View style={{display:'flex',  flexDirection: 'row', justifyContent:'space-between' }}> 
-            <View style={{width:'50%'}}>
-              <Text style={styles.ViewSeparation}> Cedula: {params.cedula} </Text>
-              <Text style={styles.ViewSeparation}> Edad: {params.edad}</Text>
-              <Text style={styles.ViewSeparation}> Sexo: {params.sexo}</Text>
+          {this.state.tabSelected !== 'play' &&
+            <View style={{display:'flex',  flexDirection: 'row', justifyContent:'space-between' }}> 
+              <View style={{width:'50%'}}>
+                <Text style={styles.ViewSeparation}> Cedula: {params.cedula} </Text>
+                <Text style={styles.ViewSeparation}> Edad: {params.edad}</Text>
+                <Text style={styles.ViewSeparation}> Sexo: {params.sexo}</Text>
+              </View>
+              <View style={{width:'50%', borderLeftWidth:0.5 , borderColor:'#dbead8', paddingHorizontal:10, display:'flex',}}>
+                <Text style={styles.ViewSeparation}> Estatura: {params.estatura} CM </Text>
+                <Text style={styles.ViewSeparation}> Peso: {params.peso} kilos</Text>
+              </View>    
             </View>
-            <View style={{width:'50%', borderLeftWidth:0.5 , borderColor:'#dbead8', paddingHorizontal:10, display:'flex',}}>
-              <Text style={styles.ViewSeparation}> Estatura: {params.estatura} CM </Text>
-              <Text style={styles.ViewSeparation}> Peso: {params.peso} kilos</Text>
-            </View>    
-          </View>
-        
+          }
         </View>
-          <Container style={{padding:20}}>
-          
-            {this.state.tabSelected === 'play' && <PlayTest />}
+
             {this.state.tabSelected === 'result' && <ViewResult data={data}/>}
-        
-          </Container>
+            {this.state.tabSelected === 'play' && <PlayTest 
+              personalInformation={params}
+              action={ core.calculateAntropometricas }
+              message={this.props.message.toJS()}
+              />}
+          {this.state.tabSelected !== 'play' &&    
           <Footer style={{position:'absolute' ,bottom:0}}>
             <FooterTab  style={{backgroundColor:'#eceff1'}}>
               <Button onPress={()=>this.setState({tabSelected:'play'})}>
@@ -90,7 +94,7 @@ class Alumno extends Component {
               </Button>
             </FooterTab>
         </Footer>
-          
+        }   
       </>
 
      
@@ -100,7 +104,7 @@ class Alumno extends Component {
 
 const mapStateToProps = (data) => ({
   DataPruebas: data.init.get('pruebas'),
-  message: data.init.get('testmessage')
+  message: data.init.get('testMessage')
 });
 
 const mapDispatchToProps = (dispatch) => ({

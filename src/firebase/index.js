@@ -58,4 +58,10 @@ var config = {
             })
         })
       }
+
+      setPruebas= (data, uid )=>{
+            pruebas.child(uid+'/medidas_antropometricas').update({
+                ...data
+            })
+      }
   }

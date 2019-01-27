@@ -1,41 +1,55 @@
 import React, { Component } from 'react';
-import { View , StyleSheet} from 'react-native';
-import {Text , Input, Item , Label ,Button , Content, Picker} from 'native-base'
- const defaultValue ={
-   
- }
+import { View , StyleSheet, ScrollView } from 'react-native';
+import {Text , Input, Item , Label ,Button , Content, Picker , Container} from 'native-base'
+ 
+const defaultValue ={
+  step:1,
+  cintura:'',
+  cadera:'',
+  presionSistolica:'',
+  presionDistolica:'',
+  selected:'Adultos',
+  cardiacaData:'',
+  respiratoriaData:'',
+  triceps:'',
+  supraIliaco:'',
+  pecho:'',
+  abdomen:'',
+  muslo:''
+}
 
 export default class PlayTest extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+     ... defaultValue
+    }
   }
 
-  state={
-    step:1,
-    cintura:'',
-    cadera:'',
-    presionSistolica:'',
-    presionDistolica:'',
-    selected:'Adultos'
-  }
-
-  onSubmit(data){
-    console.log(DataCue)
+  onSubmit(){
+    this.props.action(
+      this.state , 
+      this.props.personalInformation,
+      this.props.message
+    )
+    this.setState(defaultValue)
   }
 
   onValueChange(value) {
     this.setState({
-      selected: value
+      selected: value  
     });
   }  
 
   render() {
-     const valueInput = this.state
+    const valueInput = this.state
     return (
-      <>  
+      <View style={{flex:1, padding:20}} >  
+        <ScrollView>
         {this.state.step === 1 &&
+
           <View>
+            
             <Text style={{paddingBottom:20, textAlign:'center'}}>Indicie de cintura y cadera</Text> 
             <View style={styles.inputContent}>  
               
@@ -43,7 +57,7 @@ export default class PlayTest extends Component {
                   <Label>Cintura</Label>
                   <Input 
                    value={valueInput.cintura}
-                   onChangeText={(text)=>{this.setState({cintura:text})}}
+                   onChangeText={(text)=>{this.setState({cintura:text })}}
                   />
               </Item>
 
@@ -51,7 +65,7 @@ export default class PlayTest extends Component {
                   <Label>Cadera</Label>
                   <Input 
                    value={valueInput.cadera}
-                   onChangeText={(text)=>{this.setState({caderas:text})}}
+                   onChangeText={(text)=>{this.setState({ cadera:text})}}
                   />
               </Item>   
             </View>
@@ -59,22 +73,24 @@ export default class PlayTest extends Component {
             <Text style={{paddingBottom:20, textAlign:'center'}}>Tension arterial</Text> 
             <View style={styles.inputContent}>
               <Item stackedLabel style={styles.inputStyles}>
+                  <Label>Presion sistolica</Label>
+                  <Input 
+                  value={valueInput.presionSistolica}
+                  onChangeText={(text)=>{this.setState({presionSistolica:text})}}
+                  />
+              </Item>   
+              
+              <Item stackedLabel style={styles.inputStyles}>
                 <Label>Precion distolica</Label>
                 <Input 
-                   value={valueInput.nombre}
-                   onChangeText={(text)=>{this.setState({presionSistolica:text})}}
+                   value={valueInput.presionDistolica}
+                   onChangeText={(text)=>{this.setState({presionDistolica:text })}}
                 />
               </Item>
-
-              <Item stackedLabel style={styles.inputStyles}>
-                <Label>Presion sistolica</Label>
-                <Input 
-                 value={valueInput.apellido}
-                 onChangeText={(text)=>{this.setState({presionDistolica:text})}}
-                />
-              </Item>   
             </View>
+            
           </View>
+        
         }
         { this.state.step === 2 &&
           <View>
@@ -84,7 +100,7 @@ export default class PlayTest extends Component {
                 <Picker
                   note
                   mode="dropdown"
-                  selectedValue={this.state.selected}
+                  selectedValue={valueInput.selected}
                   onValueChange={this.onValueChange.bind(this)}
                 >
                   <Picker.Item label="Frecuencia Cardiaca Adultos" value="Adultos" />
@@ -92,10 +108,10 @@ export default class PlayTest extends Component {
                 </Picker>
               </View>
               <Item stackedLabel style={styles.inputStyles}>
-                    <Label>{this.state.selected}</Label>
+                    <Label>{valueInput.selected}</Label>
                     <Input 
-                    value={valueInput.cadera}
-                    onChangeText={(text)=>{this.setState({caderas:text})}}
+                    value={valueInput.cardiacaData}
+                    onChangeText={(text)=>{this.setState({cardiacaData:text })}}
                     />
               </Item>   
             </View>
@@ -103,43 +119,112 @@ export default class PlayTest extends Component {
             <View style={styles.inputContent}>  
               
               <Item stackedLabel >
-                  <Label>Cintura</Label>
+                  <Label>Ingrese Frecuencia Respiratoria</Label>
                   <Input 
-                   value={valueInput.cintura}
-                   onChangeText={(text)=>{this.setState({cintura:text})}}
+                   value={valueInput.respiratoriaData}
+                   onChangeText={(text)=>{this.setState({ respiratoriaData:text })}}
                   />
               </Item>
 
             </View>
-
+            
           </View>
         }
+          {/* { (this.state.step === 3 &&  this.props.personalInformation.sexo === 'mujer' ) &&
+            <View>
+              <Text style={{paddingBottom:20, textAlign:'center'}}>Composición Corporal</Text> 
+              <View style={styles.inputContent}>  
+                
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>triceps</Label>
+                    <Input 
+                    value={valueInput.triceps}
+                    onChangeText={(text)=>{this.setState({triceps:text })}}
+                    />
+                </Item>
+
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Supra Iliaco</Label>
+                    <Input 
+                    value={valueInput.supraIliaco}
+                    onChangeText={(text)=>{this.setState({supraIliaco:text})}}
+                    />
+                </Item>   
+              </View>
+              <View style={styles.inputContent}>     
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Muslo</Label>
+                    <Input 
+                    value={valueInput.muslo}
+                    onChangeText={(text)=>{this.setState({muslo:text})}}
+                    />
+                </Item>   
+              </View>
+            </View>
+          }
+
+          {(this.state.step === 3 && this.props.personalInformation.sexo === 'hombre')&&
+            <View>
+              <Text style={{paddingBottom:20, textAlign:'center'}}>Composición Corporal</Text> 
+              <View style={styles.inputContent}>  
+                
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Pecho</Label>
+                    <Input 
+                    value={valueInput.pecho}
+                    onChangeText={(text)=>{this.setState({ pecho:text })}}
+                    />
+                </Item>
+
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Abdomen</Label>
+                    <Input 
+                    value={valueInput.abdomen}
+                    onChangeText={(text)=>{this.setState({ abdomen :text })}}
+                    />
+                </Item>   
+              </View>
+              <View style={styles.inputContent}>     
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Muslo</Label>
+                    <Input 
+                    value={valueInput.muslo}
+                    onChangeText={(text)=>{this.setState({muslo:text })}}
+                    />
+                </Item>   
+              </View>
+            </View>
+          } */}
        
-            <View style={{display:'flex'  , flexDirection:'row', position:'absolute', bottom:80 , right:20 }}> 
+          <View style={{display:'flex' , flex:1 , flexDirection:'row-reverse'}}> 
+         
+            { ( this.state.step === 1  ) && 
+              <Button primary                 
+                onPress={()=>{this.setState({step:this.state.step + 1 })}}>
+                  <Text>Continuar</Text>
+              </Button>
+            }
+            
+            { this.state.step === 2 &&
+              <Button primary
+                onPress={()=>{this.onSubmit()}}
+              >
+                  <Text>Guardar</Text>
+              </Button>
+            }
+          
             { this.state.step > 1 && 
               <Button  danger style={{marginHorizontal:10}}
                 onPress={()=>{this.setState({step: this.state.step -1  })}}
               >
                 <Text>Atras</Text>
               </Button>
-            }
-            { ( this.state.step === 1  || this.state.step === 2  ) && 
-              <Button primary                 
-                onPress={()=>{this.setState({step:this.state.step + 1 })}}>
-                  <Text>Continuar</Text>
-              </Button>
-            }
+            }  
               
-          { this.state.step === 3 &&
-            <Button primary
-              onPress={()=>{this.setState({step:1 })}}
-            >
-                <Text>Guardar</Text>
-            </Button>
-          }
+            
         </View>
-
-    </>
+        </ScrollView>
+    </View>
     );
   }
 }
@@ -152,13 +237,13 @@ const styles = StyleSheet.create({
       display:'flex',
       flexDirection:'row',
       justifyContent:'space-between',
-      paddingBottom:40
+      paddingBottom:20,
+      flexWrap: 'wrap',
   },
   buttonStyle:{
-     position:'absolute' ,
-     bottom:80 , 
+    position:'absolute' ,
+     bottom:0 , 
      right:20
-     
   },
   footerStyle:{
       display:'flex' , 
@@ -170,8 +255,7 @@ const styles = StyleSheet.create({
   selectStyle:{
     width:'50%',
     height:60,
-    borderWidth:0.5, 
-    borderColor:'#D9D5DC',
+  
     display:'flex',
     marginRight: 20,
     marginTop: 10,

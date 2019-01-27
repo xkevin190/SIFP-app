@@ -11,7 +11,9 @@ import {setState} from './src/actions/actions'
 export default class App extends Component {
   constructor(){
     super()
-    console.ignoredYellowBox = ['Setting a timer'];
+    console.ignoredYellowBox = [
+      'Setting a timer'
+  ]
   }
   render () {
     store.dispatch(setState());
