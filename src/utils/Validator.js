@@ -18,14 +18,25 @@ export function GetDataPerson(data, key){
   return  dataContainer
 }
 
+const TitleTest ={
+  FC:'Frecuencia Cardiaca (FC)',
+  FR:'Frecuencia Respiratoria (FR)',
+  ICC:'Índice Cintura-Cadera (ICC)',
+  IMC:'Índice de Masa Corporal (IMC)',
+  TA:'Tensión Arterial (TA)',
+}
+
 export function TestResultFilter(data, type){
   data = data? data.toJS()[type] : ''
   const keys =  data? Object.keys(data): []
   const contentData =[]
   keys.map( result =>{
-     contentData.push(data[result])
+     contentData.push({
+       key:result,
+       title: TitleTest[result],
+        ... data[result] })
   })
-
+  
   return contentData
 }
 

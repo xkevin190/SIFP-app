@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import { Text,  Content , Container } from 'native-base';
 
-export default class ViewResult extends Component {
+export default class Antropometricas extends Component {
   constructor(props) {
     super(props);
     this.state = {

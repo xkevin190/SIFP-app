@@ -12,7 +12,6 @@ export default Map({
         recomendacion2:`Mantener tu peso`,
         recomendacion3:`Consultar Nutricionista, Realizar ejercicio Aeróbico bajo supervisión de un experto en Educación Física de larga duración y de baja  intensidad, ejemplo caminar,  trotar, nadar, anda enbicicleta.`,
         recomendacion4:'Consultar a un medico',
-        recomendacion3:'Consulte a un Medico',
         peso1:'Peso insuficiente',
         peso2:'Normopeso',
         peso3:'Sobrepeso grado I',
@@ -22,8 +21,8 @@ export default Map({
         paso7:'Obesidad de tipo III (mórbida)',
         paso8:'Obesidad de tipo IV (extrema',
         ICC1:'Muy Bajo',
-        ICC2:'Bajo',
-        ICC3:'Alto',
+        ICC2:'Riesgo Cardiovascular Bajo',
+        ICC3:'Riesgo Cardiovascular Alto',
         TA1:'optima',
         TA2:'Normal',
         TA3:'Hipertencion grado 1',
@@ -38,10 +37,10 @@ export default Map({
         FR2:'Bradipnea',
     }),
     images:Map({
-        fuerza_Muscular:{url:require('../utils/img/ic_fuerza.jpg')},
+        test_fuerza:{url:require('../utils/img/ic_fuerza.jpg')},
         medidas_antropometricas:{url:require('../utils/img/ic_antropometricas.jpg')},
-        test_Equilibrio:{url:require('../utils/img/ic_equilibrio.jpg')},
-        test_flexibilidad:{url:require( '../utils/img/ic_flexibilidad.jpg')},
-        test_velocidad:{url:require('../utils/img/ic_velocidad.jpg')},
+        test_equilibrio:{url:require('../utils/img/ic_equilibrio.jpg')},
+        flexibilidad_articular:{url:require('../utils/img/ic_flexibilidad.jpg')},
+        resitencia_muscular:{url:require('../utils/img/ic_velocidad.jpg')},
     })
 });

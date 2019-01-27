@@ -27,24 +27,24 @@ this.setSections
 
 calculateICC = async(cintura, cadera, persona, message )=>{
     const result= Number(cintura)/Number(cadera)
-    let obj = {}
+    let obj = {
+        data:result.toFixed(2)
+    }
     console.log(cintura, cadera, message ,persona)
     if(persona.sexo === 'hombre'){
         if(result < 0.95){
             obj ={
-                data:result,
+              
                 recomendacion:message.recomendacion2,
                 resultado:message.ICC1
             }
         }else if(result > 0.95 &&  result < 1){
             obj={
-                data:result,
                 recomendacion:message.recomendacion2,
                 resultado:message.ICC2
              }
         }else if(result > 1){
             obj={
-                data:result,
                 recomendacion:message.recomendacion4,
                 resultado:message.ICC3
 
@@ -53,24 +53,19 @@ calculateICC = async(cintura, cadera, persona, message )=>{
     }else{
         if(result < 0.80){
             obj ={
-            
-                data:result,
                 recomendacion:message.recomendacion2,
                 resultado:message.ICC1
             }
             
         }else if(result > 0.80 &&  result < 0.85){
             obj={
-                data:result,
                 recomendacion:message.recomendacion2,
                 resultado:message.ICC2
              }
         }else if(result > 0.85){
             obj={
-                data:result,
                 recomendacion:message.recomendacion4,
                 resultado:message.ICC3
-
              }
         }  
 
@@ -118,7 +113,7 @@ calculateFC = (type, data, message) =>{
            obj.recomendacion = message.recomendacion3 
        } else if (data < 36){
            obj.resultado = message.FC4
-           obj.recomendacion = message.recomendacion3 
+           obj.recomendacion = message.recomendacion4 
        }
 
      return obj
@@ -136,10 +131,10 @@ calculateFR = (data, type , message)=>{
           
        } else if(data < 12){ 
            obj.resultado = message.FR1
-           obj.recomendacion = message.recomendacion3 
+           obj.recomendacion = message.recomendacion4 
        } else if (data > 25 ){
            obj.resultado = message.FR2
-           obj.recomendacion = message.recomendacion3 
+           obj.recomendacion = message.recomendacion4 
        }
 
     return obj

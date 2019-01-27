@@ -22,7 +22,7 @@ class Alumno extends Component {
   }
   componentDidMount(){
     const params = this.props.navigation.state.params.data
-    this.props.getData(params.uid)
+    this.props.getData(params.uid )
     
   }
 
@@ -36,7 +36,7 @@ class Alumno extends Component {
   render() {
     const params = this.props.navigation.state.params.data
     const data = TestResultFilter(this.props.DataPruebas, this.state.selected)
-
+    console.log()
     return (
       <>
         <View 
@@ -55,11 +55,10 @@ class Alumno extends Component {
             onValueChange={this.onValueChange.bind(this)}
           >
             <Picker.Item label="Medidas Antropometricas" value="medidas_antropometricas" />
-            <Picker.Item label="Flexibilidad  Articular." value="key1" />
-            <Picker.Item label="Test de Resitencia Muscular" value="key2" />
-            <Picker.Item label="Test de Fuerza" value="key3" />
-            <Picker.Item label="Test de Equilibrio" value="key4" />
-            <Picker.Item label="Todos los Resultados" value="key5" />
+            <Picker.Item label="Flexibilidad  Articular." value="flexibilidad_articular" />
+            <Picker.Item label="Test de Resitencia Muscular" value="resitencia_muscular" />
+            <Picker.Item label="Test de Fuerza" value="test_fuerza" />
+            <Picker.Item label="Test de Equilibrio" value="test_equilibrio" />
           </Picker>
           {this.state.tabSelected !== 'play' &&
             <View style={{display:'flex',  flexDirection: 'row', justifyContent:'space-between' }}> 
@@ -76,13 +75,15 @@ class Alumno extends Component {
           }
         </View>
 
-            {this.state.tabSelected === 'result' && <ViewResult data={data}/>}
-            {this.state.tabSelected === 'play' && <PlayTest 
-              personalInformation={params}
-              action={ core.calculateAntropometricas }
-              message={this.props.message.toJS()}
-              />}
-          {this.state.tabSelected !== 'play' &&    
+        {this.state.tabSelected === 'result' && <ViewResult data={data} 
+          logo={this.props.logo.toJS()[this.state.selected]}/>}
+
+        {this.state.tabSelected === 'play' && <PlayTest 
+          personalInformation={params}
+          action={ core.calculateAntropometricas }
+          message={this.props.message.toJS()}
+        />}
+        {this.state.tabSelected !== 'play' &&    
           <Footer style={{position:'absolute' ,bottom:0}}>
             <FooterTab  style={{backgroundColor:'#eceff1'}}>
               <Button onPress={()=>this.setState({tabSelected:'play'})}>
@@ -93,7 +94,7 @@ class Alumno extends Component {
                 <Icon  style={{color:this.state.tabSelected === 'result'? 'black':'gray' }} type='MaterialIcons'  name="assignment" />
               </Button>
             </FooterTab>
-        </Footer>
+          </Footer>
         }   
       </>
 
@@ -104,7 +105,8 @@ class Alumno extends Component {
 
 const mapStateToProps = (data) => ({
   DataPruebas: data.init.get('pruebas'),
-  message: data.init.get('testMessage')
+  message: data.init.get('testMessage'),
+  logo: data.init.get('images')
 });
 
 const mapDispatchToProps = (dispatch) => ({
