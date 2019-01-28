@@ -5,6 +5,7 @@ import FloatButtons from './components/FloatButtons'
 import RegisterIntegrante from './components/RegisterIntegrante';
 import {GetDataPerson} from '../utils/Validator'
 import {connect} from 'react-redux'
+import NavBar from './components/NavBar'
 
 class ViewSections extends Component {
   constructor(props) {
@@ -13,6 +14,11 @@ class ViewSections extends Component {
       modalVisible: false,
     };
   }
+
+  
+  static navigationOptions = {
+    header: null,
+  };
 
   setModalVisible = () => {
     this.setState({modalVisible: !this.state.modalVisible});
@@ -33,7 +39,8 @@ class ViewSections extends Component {
     const params = this.props.navigation.state.params
     const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
     return (
-      <>
+      <> 
+        <NavBar navigation={this.props.navigation}/>
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
            uidSection={params.data.uid}

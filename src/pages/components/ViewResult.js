@@ -46,7 +46,7 @@ export default class ViewResult extends Component {
                       <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
                       <Text style={{paddingRight:20}}>{result.resultado}</Text>
                     </View>
-                    <Text style={{
+                   { (result.recomendacion && result.recomendacion !== '' ) &&  <Text style={{
                       display:'flex',
                       flexDirection:'row',
                       paddingTop:10,
@@ -56,7 +56,7 @@ export default class ViewResult extends Component {
                     }}>
                       <Text style={{ fontWeight:'bold'}}>Recomendacion:  </Text>
                       <Text>{result.recomendacion}</Text>
-                    </Text>
+                    </Text>}
                   </View>
                 )
             })}

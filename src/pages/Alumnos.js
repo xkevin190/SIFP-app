@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {View, StyleSheet , Image} from 'react-native';
-import { Text, Container, Content, Footer, FooterTab, Button, Icon, Picker } from 'native-base';
+import {View, StyleSheet } from 'react-native';
+import { Text,  Footer, FooterTab, Button, Icon, Picker } from 'native-base';
 import {connect} from 'react-redux'
 import {TestResultFilter} from '../utils/Validator'
 import {getPruebas} from '../actions/actions'
@@ -80,8 +80,11 @@ class Alumno extends Component {
 
         {this.state.tabSelected === 'play' && <PlayTest 
           personalInformation={params}
-          action={ core.calculateAntropometricas }
+          action={ core.SelectedMultipleFuctions }
           message={this.props.message.toJS()}
+          selected={this.state.selected}
+          
+
         />}
         {this.state.tabSelected !== 'play' &&    
           <Footer style={{position:'absolute' ,bottom:0}}>

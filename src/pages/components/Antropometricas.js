@@ -1,67 +1,272 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
-import { Text,  Content , Container } from 'native-base';
+import { View , StyleSheet, ScrollView } from 'react-native';
+import {Text , Input, Item , Label ,Button , Content, Picker , Container} from 'native-base'
+ 
+const defaultValue ={
+  step:1,
+  cintura:'',
+  cadera:'',
+  presionSistolica:'',
+  presionDistolica:'',
+  selected:'Adultos',
+  cardiacaData:'',
+  respiratoriaData:'',
+  triceps:'',
+  supraIliaco:'',
+  pecho:'',
+  abdomen:'',
+  muslo:''
+}
 
-export default class Antropometricas extends Component {
+export default class PlayTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    };
+     ... defaultValue
+    }
   }
 
+  onSubmit(){
+    this.props.action(
+      this.state , 
+      this.props.personalInformation,
+      this.props.message,
+      this.props.selected
+    )
+    this.setState(defaultValue)
+  }
+
+  onValueChange(value) {
+    this.setState({
+      selected: value  
+    });
+  }  
 
   render() {
+    const valueInput = this.state
     return (
-      <Container style={{padding:20}}>
-        <Content>
-            <Text style={{fontSize:24, textAlign:'center', paddingBottom:15}}>Resultados Obtenidos </Text>
-            <View style={{display:'flex' ,  flexDirection:'row', alignItems: 'center',  borderBottomWidth:1,
-              borderColor:'#dbead8', }}> 
+      <View style={{flex:1, padding:20}} >  
+        <ScrollView>
+        {this.state.step === 1 &&
+
+          <View>
             
-              <Image source={this.props.logo.url}
-                style={{  width:'25%',
-                height:100,
-                marginBottom:10
+            <Text style={{paddingBottom:20, textAlign:'center'}}>Indicie de cintura y cadera</Text> 
+            <View style={styles.inputContent}>  
+              
+              <Item stackedLabel style={styles.inputStyles}>
+                  <Label>Cintura</Label>
+                  <Input 
+                   value={valueInput.cintura}
+                   onChangeText={(text)=>{this.setState({cintura:text })}}
+                  />
+              </Item>
+
+              <Item stackedLabel style={styles.inputStyles}>
+                  <Label>Cadera</Label>
+                  <Input 
+                   value={valueInput.cadera}
+                   onChangeText={(text)=>{this.setState({ cadera:text})}}
+                  />
+              </Item>   
+            </View>
+
+            <Text style={{paddingBottom:20, textAlign:'center'}}>Tension arterial</Text> 
+            <View style={styles.inputContent}>
+              <Item stackedLabel style={styles.inputStyles}>
+                  <Label>Presion sistolica</Label>
+                  <Input 
+                  value={valueInput.presionSistolica}
+                  onChangeText={(text)=>{this.setState({presionSistolica:text})}}
+                  />
+              </Item>   
+              
+              <Item stackedLabel style={styles.inputStyles}>
+                <Label>Precion distolica</Label>
+                <Input 
+                   value={valueInput.presionDistolica}
+                   onChangeText={(text)=>{this.setState({presionDistolica:text })}}
+                />
+              </Item>
+            </View>
+            
+          </View>
+        
+        }
+        { this.state.step === 2 &&
+          <View>
+             <Text style={{paddingBottom:20, textAlign:'center'}}>Frecuencia Cardiaca</Text> 
+            <View style={{display:'flex' , flexDirection:'row' ,}}>
+              <View style={styles.selectStyle}>
+                <Picker
+                  note
+                  mode="dropdown"
+                  selectedValue={valueInput.selected}
+                  onValueChange={this.onValueChange.bind(this)}
+                >
+                  <Picker.Item label="Frecuencia Cardiaca Adultos" value="Adultos" />
+                  <Picker.Item label="Frecuencia Cardiaca Atletas" value="Atletas" />
+                </Picker>
+              </View>
+              <Item stackedLabel style={styles.inputStyles}>
+                    <Label>{valueInput.selected}</Label>
+                    <Input 
+                    value={valueInput.cardiacaData}
+                    onChangeText={(text)=>{this.setState({cardiacaData:text })}}
+                    />
+              </Item>   
+            </View>
+            <Text style={{paddingBottom:20,paddingTop:20, textAlign:'center'}}>Frecuencia Respiratoria</Text> 
+            <View style={styles.inputContent}>  
+              
+              <Item stackedLabel >
+                  <Label>Ingrese Frecuencia Respiratoria</Label>
+                  <Input 
+                   value={valueInput.respiratoriaData}
+                   onChangeText={(text)=>{this.setState({ respiratoriaData:text })}}
+                  />
+              </Item>
+
+            </View>
+            
+          </View>
+        }
+          {/* { (this.state.step === 3 &&  this.props.personalInformation.sexo === 'mujer' ) &&
+            <View>
+              <Text style={{paddingBottom:20, textAlign:'center'}}>Composición Corporal</Text> 
+              <View style={styles.inputContent}>  
                 
-              }}/>
-              <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estas pruebas son las Iniciales calculadas al momento del Registro </Text>
-            </View >
-            { (this.props.data.length > 0) &&
-              this.props.data.map( (result ) =>{
-                return (  
-                  <View key={result.key} style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
-                    <View style={{
-                      display:'flex',
-                      flexDirection:'row',
-                      paddingTop:10
-                    }}>
-                      <Text style={{paddingRight:10 , fontWeight:'bold'}}>{result.title}:</Text>
-                      <Text style={{paddingRight:20}}>{result.data}</Text>
-                    </View>
-                    <View style={{
-                      display:'flex',
-                      flexDirection:'row',
-                      paddingTop:10
-                    }}>
-                      <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
-                      <Text style={{paddingRight:20}}>{result.resultado}</Text>
-                    </View>
-                    <Text style={{
-                      display:'flex',
-                      flexDirection:'row',
-                      paddingTop:10,
-                      flexWrap:'wrap',
-                      marginBottom:15
-                    
-                    }}>
-                      <Text style={{ fontWeight:'bold'}}>Recomendacion:  </Text>
-                      <Text>{result.recomendacion}</Text>
-                    </Text>
-                  </View>
-                )
-            })}
-        </Content>
-      </Container>
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>triceps</Label>
+                    <Input 
+                    value={valueInput.triceps}
+                    onChangeText={(text)=>{this.setState({triceps:text })}}
+                    />
+                </Item>
+
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Supra Iliaco</Label>
+                    <Input 
+                    value={valueInput.supraIliaco}
+                    onChangeText={(text)=>{this.setState({supraIliaco:text})}}
+                    />
+                </Item>   
+              </View>
+              <View style={styles.inputContent}>     
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Muslo</Label>
+                    <Input 
+                    value={valueInput.muslo}
+                    onChangeText={(text)=>{this.setState({muslo:text})}}
+                    />
+                </Item>   
+              </View>
+            </View>
+          }
+
+          {(this.state.step === 3 && this.props.personalInformation.sexo === 'hombre')&&
+            <View>
+              <Text style={{paddingBottom:20, textAlign:'center'}}>Composición Corporal</Text> 
+              <View style={styles.inputContent}>  
+                
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Pecho</Label>
+                    <Input 
+                    value={valueInput.pecho}
+                    onChangeText={(text)=>{this.setState({ pecho:text })}}
+                    />
+                </Item>
+
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Abdomen</Label>
+                    <Input 
+                    value={valueInput.abdomen}
+                    onChangeText={(text)=>{this.setState({ abdomen :text })}}
+                    />
+                </Item>   
+              </View>
+              <View style={styles.inputContent}>     
+                <Item stackedLabel style={styles.inputStyles}>
+                    <Label>Muslo</Label>
+                    <Input 
+                    value={valueInput.muslo}
+                    onChangeText={(text)=>{this.setState({muslo:text })}}
+                    />
+                </Item>   
+              </View>
+            </View>
+          } */}
+       
+          <View style={{display:'flex' , flex:1 , flexDirection:'row-reverse'}}> 
+         
+            { ( this.state.step === 1  ) && 
+              <Button primary                 
+                onPress={()=>{this.setState({step:this.state.step + 1 })}}>
+                  <Text>Continuar</Text>
+              </Button>
+            }
+            
+            { this.state.step === 2 &&
+              <Button primary
+                onPress={()=>{this.onSubmit()}}
+              >
+                  <Text>Guardar</Text>
+              </Button>
+            }
+          
+            { this.state.step > 1 && 
+              <Button  danger style={{marginHorizontal:10}}
+                onPress={()=>{this.setState({step: this.state.step -1  })}}
+              >
+                <Text>Atras</Text>
+              </Button>
+            }  
+              
+            
+        </View>
+        </ScrollView>
+    </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  inputStyles:{
+      width:'40%'
+  },
+  inputContent:{
+      display:'flex',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      paddingBottom:20,
+      flexWrap: 'wrap',
+  },
+  buttonStyle:{
+    position:'absolute' ,
+     bottom:0 , 
+     right:20
+  },
+  footerStyle:{
+      display:'flex' , 
+      flexDirection: 'row', 
+      justifyContent:'flex-end' ,
+      paddingTop:20, 
+       minHeight:60   
+  },
+  selectStyle:{
+    width:'50%',
+    height:60,
+  
+    display:'flex',
+    marginRight: 20,
+    marginTop: 10,
+  },
+  containerButton:{
+    display:'flex',
+    flexDirection:'row', 
+    position:'absolute', 
+    bottom:80, 
+    right:20 
+  }
+
+ })

@@ -6,6 +6,7 @@ import {Container, Content, List, ListItem, Text, Body, Right, Button, View , Ic
 import {connect} from 'react-redux';
 import {validateData} from '../utils/Validator'
 import {setData} from '../firebase/index'
+import NavBar from './components/NavBar'
 
 class Sections extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ class Sections extends Component {
   }
   state = {
     modalVisible: false,
+  };
+  
+  static navigationOptions = {
+    header: null,
   };
 
   componentDidMount(){
@@ -41,8 +46,10 @@ class Sections extends Component {
   render() {
     const  {setAction} = this.props
     const data = validateData(this.props.jobsGrup)
+    
     return (
-      <>
+      <> 
+        <NavBar navigation={this.props.navigation}/>
         <DialogForm modalVisible={this.state.modalVisible} 
           data={data} 
           close={this.closeModal}
@@ -62,10 +69,10 @@ class Sections extends Component {
                     </Body>
                     <Right style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                       <Button transparent /*onPress={() =>{setAction.removeSections(seciones.uid) }} */>
-                        <Icon  type='MaterialIcons' name='edit'/>
+                        <Icon style={{color:'#00695c'}} type='MaterialIcons' name='edit'/>
                       </Button>
-                      <Button transparent  onPress={() =>{setAction.removeSections(seciones.uid) }}>
-                        <Icon  type='MaterialIcons' name='delete'/>
+                      <Button transparent onPress={() =>{setAction.removeSections(seciones.uid) }}>
+                        <Icon style={{color:'#00695c'}}   type='MaterialIcons' name='delete'/>
                       </Button>
                     </Right>
                   </ListItem>

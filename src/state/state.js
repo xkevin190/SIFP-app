@@ -35,6 +35,14 @@ export default Map({
         FC4: 'Bradicardia por bloqueo auriculo-ventricular completo.',
         FR1:'Taquipnea',
         FR2:'Bradipnea',
+        evaluacion1:'Muy Bajo',
+        evaluacion2:'Bajo',
+        evaluacion3:'Deficiente',
+        evaluacion4:'Promedio',
+        evaluacion5:'Buena',
+        evaluacion6:'Exelente',
+        evaluacion7:'Superior',
+        
     }),
     images:Map({
         test_fuerza:{url:require('../utils/img/ic_fuerza.jpg')},
