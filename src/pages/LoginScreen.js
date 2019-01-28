@@ -15,6 +15,9 @@ import {connect} from 'react-redux'
           password:''
         };
       }
+    static navigationOptions = {
+        header: null,
+    };
 
     helloword = (event) =>{
        const data={
@@ -26,7 +29,7 @@ import {connect} from 'react-redux'
     render() {
         // console.log(this.props)
         return (
-            <Container>
+            <Container style={{padding:20 , backgroundColor:'#FFFFFF'}}>
                 <Content>
                     <Form>
                         <Item floatingLabel>

@@ -34,14 +34,14 @@ var config = {
     }
   }
 
-  export class setData {
-      setSections =(data)=>{
-        const key = sections.push().key
-        sections.child(key).set({
-            uid:key,
-            ...data
-        })
-      }
+export class setData extends getData {
+    setSections =(data)=>{
+    const key = sections.push().key
+    sections.child(key).set({
+        uid:key,
+        ...data
+    })
+    }
 
       removeSections=(uid)=>{
           sections.child(uid).remove()
@@ -58,4 +58,13 @@ var config = {
             })
         })
       }
-  }
+
+      setPruebas= (data, uid )=>{
+        // this.getDataPrubebas( uid ,
+        //     (dataget)=>{
+                pruebas.child(uid+'/medidas_antropometricas').update({
+                    ...data,
+                })
+            // })
+        }
+    }

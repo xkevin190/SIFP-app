@@ -23,10 +23,12 @@ export default class DialogForm extends Component {
             <Dialog
                 visible={this.props.modalVisible}
                 title="Registrar Grupo de Trabajo"
+                titleStyle={{color:'#004d40',
+                }}
                 animationType='fade'
                 onTouchOutside={() => this.props.close()} >
                 <View style={{height:300}}>
-                <Text>
+                <Text style={{paddingBottom:10}}>
                     Porfavor agrega una caracteristica y nombre para crear tu grupo 
                 </Text>
                 <Form>
@@ -52,13 +54,15 @@ export default class DialogForm extends Component {
                 </Form> 
                 <Button
                     onPress={this.onSubmit.bind(this)}
+                    disabled
                     style={{
                         position:'absolute',
                         bottom:10,
                         right: 10,
+                        backgroundColor:'#004d40'
                     }}
                 >
-                    <Text>
+                    <Text >
                         agregar 
                     </Text>
                 </Button>

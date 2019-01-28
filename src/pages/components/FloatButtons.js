@@ -11,7 +11,7 @@ export default class FloatButtons extends Component {
 
   render() {
     return (
-         <TouchableOpacity onPress={()=>{this.props.showModal()}}
+        <TouchableOpacity onPress={()=>{this.props.showModal()}}
             style={styles.floatButton}> 
             <Text style={styles.textButton}> +</Text>
         </TouchableOpacity>
@@ -24,15 +24,22 @@ const styles = StyleSheet.create({
         width:50,
         height:50,   
         position: 'absolute',
-        backgroundColor: 'blue',
+        backgroundColor: '#004d40',
         right:20,
         bottom:20,
         borderRadius:100,
         alignItems:'center',
         justifyContent:'center',
-        shadowOffset:{  width: 50,  height: 20,  },
-        shadowColor: 'black',
-        shadowOpacity: 0.4,
+        shadowColor: "black",
+        shadowOffset: {
+          width: 0,
+          height: 10,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 100,
+        
+        elevation: 3,
+
     },
 
     textButton:{

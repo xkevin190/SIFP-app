@@ -1,8 +1,7 @@
 
    import React, { Component } from 'react';
    import { Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
-   import {View ,Text} from 'react-native'
-   import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+   import {TouchableHighlight, StyleSheet} from 'react-native'
    
    class NavBar extends Component {
     _menu = null;
@@ -20,35 +19,35 @@
     };
         
      render() {
+        const {navigation} = this.props
+        console.log(navigation)
        return (
-            <Header>
-                {this.props.initialRouteParams.title !== this.props.title &&
+            <Header style={{backgroundColor:'#004d40'}} androidStatusBarColor='#004d40' >
+                {navigation.state.routeName !== 'Sections' &&
                 <Left>
-                <Button transparent onPress={()=>this.props.navigation.pop()}>
-                    <Icon name='arrow-back' />
-                </Button>
+                <TouchableHighlight 
+                 underlayColor='#eeeeee'
+                 style={{
+                     paddingHorizontal:10,
+                     paddingVertical:6,
+                     borderRadius:100
+                 }}
+                 
+                 onPress={()=>{navigation.pop()}}
+                >    
+                   
+                     <Icon style={{color:'white', fontSize:24,}}  name='arrow-back'  />
+                   
+                </TouchableHighlight>
                 </Left>
                 }
                 <Body>
-                <Title>{this.props.title}</Title>
+                <Title style={{paddingHorizontal:10}}>SIPF</Title>
                 </Body>
                 <Right>
-                <Button  transparent style={{marginRight:20 }}>
+                <Button  transparent >
                     <Icon name='search' />
                 </Button>
-                <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', position:'absolute' }}>
-                    <Menu 
-                    ref={this.setMenuRef}
-                    button={ <Button onPress={this.showMenu} transparent>
-                        <Icon name='more' />
-                    </Button>}
-                    >
-                    <MenuItem onPress={()=>this.props.navigation.push('sections')}>Panel de Registro</MenuItem>
-                    <MenuItem onPress={this.hideMenu}>Logout</MenuItem>
-                    <MenuItem onPress={this.hideMenu}>salir</MenuItem>
-                    </Menu>
-                 </View>
-               
                 </Right>
              </Header>
        );
@@ -57,3 +56,8 @@
    }
    
    export default NavBar;
+
+
+   const styles = StyleSheet.create({
+    
+   })
