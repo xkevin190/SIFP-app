@@ -7,6 +7,7 @@ import {getPruebas} from '../actions/actions'
 import ViewResult from './components/ViewResult'
 import PlayTest from './components/PlayTest'
 import CoreFuctions from '../core'
+import Navar from './components/NavBar'
 
 
 const core = new CoreFuctions()
@@ -33,17 +34,23 @@ class Alumno extends Component {
     });
   }
 
+  static navigationOptions = {
+    header: null,
+  };
+
+
   render() {
     const params = this.props.navigation.state.params.data
     const data = TestResultFilter(this.props.DataPruebas, this.state.selected)
     console.log()
     return (
       <>
+        <Navar navigation={this.props.navigation}/>
         <View 
           style={{
             borderRadius:2,
-            borderBottomWidth:1,
-            borderColor:'#dbead8',
+            borderBottomWidth:0.5,
+            borderColor:'#004d40',
           }}
         >  
           <Text style={{ padding:15,fontSize:24}}> {params.nombre} {params.apellido}</Text>
@@ -67,7 +74,7 @@ class Alumno extends Component {
                 <Text style={styles.ViewSeparation}> Edad: {params.edad}</Text>
                 <Text style={styles.ViewSeparation}> Sexo: {params.sexo}</Text>
               </View>
-              <View style={{width:'50%', borderLeftWidth:0.5 , borderColor:'#dbead8', paddingHorizontal:10, display:'flex',}}>
+              <View style={{width:'50%', borderLeftWidth:0.5 , borderColor:'#004d40', paddingHorizontal:10, display:'flex',}}>
                 <Text style={styles.ViewSeparation}> Estatura: {params.estatura} CM </Text>
                 <Text style={styles.ViewSeparation}> Peso: {params.peso} kilos</Text>
               </View>    
@@ -88,13 +95,14 @@ class Alumno extends Component {
         />}
         {this.state.tabSelected !== 'play' &&    
           <Footer style={{position:'absolute' ,bottom:0}}>
+
             <FooterTab  style={{backgroundColor:'#eceff1'}}>
               <Button onPress={()=>this.setState({tabSelected:'play'})}>
-                <Icon  style={{color:this.state.tabSelected === 'play'? 'black':'gray' }} name="play" />
+                <Icon  style={{color:this.state.tabSelected === 'play'? '#00695c':'gray' }} name="play" />
               </Button>
              
               <Button onPress={()=>this.setState({tabSelected:'result'})}>
-                <Icon  style={{color:this.state.tabSelected === 'result'? 'black':'gray' }} type='MaterialIcons'  name="assignment" />
+                <Icon  style={{color:this.state.tabSelected === 'result'? '#00695c':'gray' }} type='MaterialIcons'  name="assignment" />
               </Button>
             </FooterTab>
           </Footer>

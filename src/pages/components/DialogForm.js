@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import { Dialog } from 'react-native-simple-dialogs'
 import { Form, Item, Input, Label,Text, View ,Button } from 'native-base';
+import InputField from '../../components/Input'
+import {Formik} from 'formik'
+import * as yup from 'yup';
 
+const initialValues ={
+    name:'hello',
+    caracteristicas:'world'
+  }
+  
+  const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required('Nombre es Requerido'),
+    caracteristicas: yup
+      .string()
+      .required('Caracteristicas es Requerido'),
+  });
+  
 
 export default class DialogForm extends Component {   
     state={
@@ -9,12 +26,12 @@ export default class DialogForm extends Component {
         caracteristicas:''
     }
 
-    onSubmit = (event) => { 
+    onSubmit = (value) => { 
         const obj={
            name: this.state.name,
            caracteristicas:this.state.caracteristicas
         }
-        this.props.register( obj )
+        this.props.register( value )
         this.props.close()
     }
 
@@ -32,40 +49,47 @@ export default class DialogForm extends Component {
                     Porfavor agrega una caracteristica y nombre para crear tu grupo 
                 </Text>
                 <Form>
-                    <Item >
-                    <Input 
-                        placeholder= 'Nombre'
-                        maxLength={30}
-                        onChangeText={(text)=>{
-                            this.setState({name: text})
-                        }}
-                    />
-                    </Item>
-                    <Item >
-                    <Input
-                    onChangeText={(text)=>{
-                        this.setState({caracteristicas: text})
-                    }} 
-                    placeholder='Caracteristicas del grupo'
-                    multiline = {true}
-                    numberOfLines = {4}
-                    />
-                    </Item>
+                    <Formik
+                        InitialValues={initialValues}
+                        onSubmit={this.onSubmit}
+                        validationSchema={validationSchema}
+                        render = {({values , handleSubmit, setFieldValue, errors }) =>(
+                            <>
+                                <InputField label='Nombre'
+                                value={values.name}
+                                onChange={setFieldValue}
+                                name='name'
+                                error={errors.name}
+                                />
+                                <InputField label ='Caracteristicas' 
+                                value={values.caracteristicas}
+                                onChange={setFieldValue}
+                                name='caracteristicas'
+                                error={errors.caracteristicas}
+                                multiline = {true}
+                                numberOfLines = {4}
+                                />
+                                <View style={{flexDirection:'row-reverse'}}>
+                                    <Button
+                                        onPress={handleSubmit}
+                                        style={{
+                                            justifyContent:'center',
+                                            backgroundColor:'#004d40'
+                                            
+                                        }}
+                                    >
+                                        <Text >
+                                            agregar 
+                                        </Text>
+                                    </Button>
+                                </View>
+                            </> 
+                        )}
+
+                            
+                    />  
                 </Form> 
-                <Button
-                    onPress={this.onSubmit.bind(this)}
-                    disabled
-                    style={{
-                        position:'absolute',
-                        bottom:10,
-                        right: 10,
-                        backgroundColor:'#004d40'
-                    }}
-                >
-                    <Text >
-                        agregar 
-                    </Text>
-                </Button>
+                
                 </View>
             </Dialog>
         );

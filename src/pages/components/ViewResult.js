@@ -16,7 +16,7 @@ export default class ViewResult extends Component {
         <Content>
             <Text style={{fontSize:24, textAlign:'center', paddingBottom:15}}>Resultados Obtenidos </Text>
             <View style={{display:'flex' ,  flexDirection:'row', alignItems: 'center',  borderBottomWidth:1,
-              borderColor:'#dbead8', }}> 
+              borderColor:'#004d40', }}> 
             
               <Image source={this.props.logo.url}
                 style={{  width:'25%',
@@ -29,7 +29,7 @@ export default class ViewResult extends Component {
             { (this.props.data.length > 0) &&
               this.props.data.map( (result ) =>{
                 return (  
-                  <View key={result.key} style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
+                  <View key={result.key} style={{borderBottomWidth:1,borderColor:'#004d40',}} >
                     <View style={{
                       display:'flex',
                       flexDirection:'row',
