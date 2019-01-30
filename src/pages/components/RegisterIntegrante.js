@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {StyleSheet} from 'react-native'
 import {Modal, Text, View,} from 'react-native';
-import { Form, Item, Input, Label ,Button ,Radio, Content } from 'native-base';
+import { Form, Item, Input, Label  ,Radio, Content } from 'native-base';
 import { Formik } from 'formik'
 import * as yup from 'yup'  
 import InputField from '../../components/Input'
+import Button from '../../components/Button'
 
 const defaultvalue={
     nombre:'',
@@ -15,7 +16,6 @@ const defaultvalue={
     cedula:'',
     sexo:'mujer'
 }
-
 const validationSchema = yup.object().shape({
     nombre: yup
         .string()
@@ -47,19 +47,25 @@ const validationSchema = yup.object().shape({
   });
 
 export default class RegisterIntegrante extends Component {   
-   
-
-    onSubmit = async (values) => { 
-
+    onSubmit = async (values,{ resetForm}) => { 
+        if(this.props.update === null){
+            console.log('dios 2')
+            await this.props.register(
+                this.props.uidSection,
+                values,
+                this.props.message
+            )
+        }else{
+            console.log('dios1')
+            this.props.updateAction(
+                this.props.uidSection, 
+                this.props.update,
+                values
+            )
+            this.props.close()   
+        }
         console.log(values)
-     
-        await this.props.register(
-            this.props.uidSection,
-            values,
-            this.props.message
-        )
-        
-    
+        resetForm(defaultvalue)
     }
 
     render(){
@@ -78,7 +84,9 @@ export default class RegisterIntegrante extends Component {
                     initialValues={defaultvalue}
                     onSubmit={this.onSubmit}
                     validationSchema={validationSchema}
-                    render = {({values , handleSubmit, setFieldValue, errors }) =>(
+                    render = {({values , handleSubmit, setFieldValue, errors, resetForm }) =>{
+                        
+                     return(
                         < Content>
                             <View style={{padding:20 }}>
                                 
@@ -176,19 +184,20 @@ export default class RegisterIntegrante extends Component {
                          
                                 <View style={styles.footerStyle}>
                                     <Button 
-                                    danger
-                                    style={styles.buttonStyle} 
-                                    onPress={()=>{this.props.close()}} 
-                                    ><Text> Atras </Text></Button>
+                                       title='ATRAS'
+                                       type='secondary'
+                                       handleSubmit={()=>{this.props.close()}}
+                                    />
                                     <Button 
-                                    primary 
-                                    style={styles.buttonStyle} 
-                                    onPress={handleSubmit}
-                                    ><Text> Registrar </Text></Button>
+                                       title='REGISTRAR'
+                                       type='primary'
+                                       handleSubmit={handleSubmit}
+                                    />
                                 </View>    
                             </View>
                         </Content>
                     )}
+                    }
                 />
               
                 </Modal>

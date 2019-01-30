@@ -34,6 +34,10 @@ class Alumno extends Component {
     });
   }
 
+  backtoResult=()=>{
+    this.setState({tabSelected:'result'})
+  }
+
   static navigationOptions = {
     header: null,
   };
@@ -42,10 +46,10 @@ class Alumno extends Component {
   render() {
     const params = this.props.navigation.state.params.data
     const data = TestResultFilter(this.props.DataPruebas, this.state.selected)
-    console.log()
+
     return (
       <>
-        <Navar navigation={this.props.navigation}/>
+        <Navar navigation={this.props.navigation} search={null}/>
         <View 
           style={{
             borderRadius:2,
@@ -53,19 +57,19 @@ class Alumno extends Component {
             borderColor:'#004d40',
           }}
         >  
-          <Text style={{ padding:15,fontSize:24}}> {params.nombre} {params.apellido}</Text>
+          <Text style={{ paddingHorizontal:15, paddingTop:15 ,fontSize:24}}> {params.nombre} {params.apellido}</Text>
           <Picker
             note
             mode="dropdown"
-            style={{ position:'absolute', width: '50%' , top:10, right:20 }}
+            style={{ marginHorizontal:15 , width:'90%' }}
             selectedValue={this.state.selected}
             onValueChange={this.onValueChange.bind(this)}
           >
             <Picker.Item label="Medidas Antropometricas" value="medidas_antropometricas" />
             <Picker.Item label="Flexibilidad  Articular." value="flexibilidad_articular" />
-            <Picker.Item label="Test de Resitencia Muscular" value="resitencia_muscular" />
+            {/* <Picker.Item label="Test de Resitencia Muscular" value="resitencia_muscular" />
             <Picker.Item label="Test de Fuerza" value="test_fuerza" />
-            <Picker.Item label="Test de Equilibrio" value="test_equilibrio" />
+            <Picker.Item label="Test de Equilibrio" value="test_equilibrio" /> */}
           </Picker>
           {this.state.tabSelected !== 'play' &&
             <View style={{display:'flex',  flexDirection: 'row', justifyContent:'space-between' }}> 
@@ -90,13 +94,26 @@ class Alumno extends Component {
           action={ core.SelectedMultipleFuctions }
           message={this.props.message.toJS()}
           selected={this.state.selected}
+          backToResult={this.backtoResult}
           
 
         />}
         {this.state.tabSelected !== 'play' &&    
-          <Footer style={{position:'absolute' ,bottom:0}}>
+          <Footer style={{
+            
+          }} >
 
-            <FooterTab  style={{backgroundColor:'#eceff1'}}>
+            <FooterTab  style={{backgroundColor:'#FFFFFF',
+              shadowColor: "black",
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              },
+              shadowOpacity: 7,
+              shadowRadius: 16.00,
+              
+              elevation: 24,
+            }}>
               <Button onPress={()=>this.setState({tabSelected:'play'})}>
                 <Icon  style={{color:this.state.tabSelected === 'play'? '#00695c':'gray' }} name="play" />
               </Button>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View , StyleSheet, ScrollView } from 'react-native';
-import {Text , Input, Item , Label ,Button , Content, Picker , Container} from 'native-base'
- 
+import {Text , Input, Item , Label  , Content, Picker , Container} from 'native-base'
+import Button  from '../../components/Button'
+
 const defaultValue ={
   step:1,
   cintura:'',
@@ -34,6 +35,7 @@ export default class PlayTest extends Component {
       this.props.selected
     )
     this.setState(defaultValue)
+    this.props.backToResult()
   }
 
   onValueChange(value) {
@@ -200,29 +202,29 @@ export default class PlayTest extends Component {
           <View style={{display:'flex' , flex:1 , flexDirection:'row-reverse'}}> 
          
             { ( this.state.step === 1  ) && 
-              <Button primary                 
-                onPress={()=>{this.setState({step:this.state.step + 1 })}}>
-                  <Text>Continuar</Text>
-              </Button>
+                <Button 
+                  title='CONTINUAR'
+                  type='primary'
+                  handleSubmit={()=>{this.setState({step:this.state.step + 1 })}}
+              />
             }
             
             { this.state.step === 2 &&
-              <Button primary
-                onPress={()=>{this.onSubmit()}}
-              >
-                  <Text>Guardar</Text>
-              </Button>
+              <Button 
+                title='GUARDAR'
+                type='primary'
+                handleSubmit={()=>{this.onSubmit()}}
+              />
             }
           
             { this.state.step > 1 && 
-              <Button  danger style={{marginHorizontal:10}}
-                onPress={()=>{this.setState({step: this.state.step -1  })}}
-              >
-                <Text>Atras</Text>
-              </Button>
-            }  
-              
-            
+      
+              <Button 
+                title='ATRAS'
+                type='secondary'
+                handleSubmit={()=>{this.setState({step: this.state.step -1  })}}
+              />
+            }     
         </View>
         </ScrollView>
     </View>

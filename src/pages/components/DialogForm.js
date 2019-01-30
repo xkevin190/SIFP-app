@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Dialog } from 'react-native-simple-dialogs'
-import { Form, Item, Input, Label,Text, View ,Button } from 'native-base';
+import { Form, Text, View  } from 'native-base';
 import InputField from '../../components/Input'
 import {Formik} from 'formik'
 import * as yup from 'yup';
-
+import Button from '../../components/Button'
 const initialValues ={
     name:'hello',
     caracteristicas:'world'
@@ -27,12 +27,16 @@ export default class DialogForm extends Component {
     }
 
     onSubmit = (value) => { 
-        const obj={
-           name: this.state.name,
-           caracteristicas:this.state.caracteristicas
+ 
+        if(this.props.update === null){
+            this.props.register( value )
+            this.props.close()
+        }else{
+            
+            this.props.updateAction(this.props.update, value)
+            this.props.close()
         }
-        this.props.register( value )
-        this.props.close()
+        
     }
 
     render(){
@@ -70,18 +74,11 @@ export default class DialogForm extends Component {
                                 numberOfLines = {4}
                                 />
                                 <View style={{flexDirection:'row-reverse'}}>
-                                    <Button
-                                        onPress={handleSubmit}
-                                        style={{
-                                            justifyContent:'center',
-                                            backgroundColor:'#004d40'
-                                            
-                                        }}
-                                    >
-                                        <Text >
-                                            agregar 
-                                        </Text>
-                                    </Button>
+                                    <Button 
+                                       title='GUARDAR'
+                                       type='primary'
+                                       handleSubmit={handleSubmit}
+                                    />
                                 </View>
                             </> 
                         )}

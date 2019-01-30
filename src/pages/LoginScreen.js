@@ -1,73 +1,96 @@
-import React, {Component} from 'react';
-import { Container,  Content, Button, Form, Item, Input, Label,Text  } from 'native-base';
-import {StyleSheet} from 'react-native';
-import {logout} from '../actions/actions'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import InputField from '../components/Input'
+import Button from '../components/Button'
+import {View , Text} from 'react-native'
+import { Content } from 'native-base'
+import {Formik} from 'formik'
+import * as yup from 'yup';
 
-
-
- class LoginScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-          isShowingText: 'hello word',
-          users:'',
-          password:''
-        };
-      }
-    static navigationOptions = {
-        header: null,
-    };
-
-    helloword = (event) =>{
-       const data={
-        users:this.state.user,
-        password: this.state.password
-       }
-       this.props.logout(data)
-   }
-    render() {
-        // console.log(this.props)
-        return (
-            <Container style={{padding:20 , backgroundColor:'#FFFFFF'}}>
-                <Content>
-                    <Form>
-                        <Item floatingLabel>
-                        <Label>Username</Label>
-                        <Input onChangeText={(text)=>{this.setState({user:text})}}
-                        />
-                        </Item>
-                        <Item floatingLabel last>
-                        <Label>Password</Label>
-                        <Input 
-                            onChangeText={(text)=>{this.setState({password:text})}} 
-                            secureTextEntry
-                        />
-                        </Item>
-                    </Form> 
-                        <Button style={styles.dios} primary full onPress={()=>this.props.navigation.navigate('Sections')}><Text>bueno hay vamos</Text></Button>
-                </Content>
-        </Container>
-        );
-  }
+const initialValues ={
+  email:'hello',
+  password:'world'
 }
 
-const mapStateToProps = (state) => ({
-    state
-  });
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('El Email no es valido')
+    .required(),
+  password: yup
+    .string()
+    .label('Password')
+    .required('La contraseña es requerida'),
+});
+
+export default class Equilibrio extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { count: 0 }
+  }
+  handleSubmit=(values, {resetForm}) =>{
+    this.props.navigation.navigate('Sections')
+    resetForm(initialValues)
+  }
   
-  const mapDispatchToProps = (dispatch) => ({
-    logout:logout
-  });
-  
-  export default connect(mapStateToProps,{logout})(LoginScreen);
+  static navigationOptions = {
+    header: null,
+  };
 
 
-const styles = StyleSheet.create({
-    dios: {
-     marginTop:20
-    },
-    red: {
-      color: 'red',
-    },
-  });
+  onPress = () => {
+    this.setState({
+      count: this.state.count+1
+    })
+  }
+
+  
+
+ render() {
+    return (
+        <Formik
+          InitialValues={initialValues}
+          onSubmit={this.handleSubmit}
+          validationSchema={validationSchema}
+          render = {({values , handleSubmit, setFieldValue, errors }) =>(
+           <View style={{ flex:1 ,display:'flex', alignItems:'center' , justifyContent:'center'}}>
+                
+                <View>
+                    <Text style={{fontSize:65, paddingBottom:70 , color:'#004d40'}}>S I P F</Text>
+                </View> 
+               <View> 
+                    <InputField label='Email'
+                    value={values.email}
+                    onChange={setFieldValue}
+                    name='email'
+                    error={errors.email}
+        
+                    />
+                    <InputField label ='Password' 
+                    value={values.password}
+                    onChange={setFieldValue}
+                    name='password'
+                    error={errors.password}
+                    />
+                </View>
+                <View style={{display:'flex', flexDirection: 'row'}}>
+                    
+                    <Button 
+                    title='REGISTRAR'
+                    type='primary'
+                    handleSubmit={handleSubmit}
+                    />
+                    <Button 
+                    title='LOGIN'
+                    type='primary'
+                    handleSubmit={handleSubmit}
+                    
+                    />
+                </View>
+           </View> 
+          )}
+            
+      />  
+      
+    )
+  }
+}

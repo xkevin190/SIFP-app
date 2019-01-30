@@ -20,6 +20,13 @@ export const sectionsData = () => dispatch  =>{
   )  
 }
 
+export function searchData (data){
+  return {
+    type:'SEARCH',
+    payload:data
+  }
+}
+
 export function logout(users) {
     return {
       type: 'LOGOUT',

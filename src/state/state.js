@@ -7,6 +7,7 @@ export default Map({
     }),
     pruebas:Map(),
     groupData:List(),
+    search:'',
     testMessage: Map({
         recomendacion:`Consultar Nutricionista Realizar trabajos con pesasbajo supervisión de unexperto en Educación física.`,
         recomendacion2:`Mantener tu peso`,

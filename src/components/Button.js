@@ -12,21 +12,22 @@ export default class componentName extends Component {
       const {title , type , handleSubmit } = this.props
      const color ={
          primary: '#004d40',
-         seconday: '#d50000'
+         secondary: '#d50000'
      }
     return (
         <TouchableOpacity 
         style={{
-          backgroundColor:color['primary'] , 
+          backgroundColor:color[type] , 
           padding:10,
           alignItems:'center',
           justifyContent:'center',
           borderRadius: 5,  
-          width:90
+          marginHorizontal:5,
+          minWidth: 100,
         }}
         onPress={handleSubmit}
         >
-           <Text style={{fontSize:15 , fontWeight:'400' , color:'white' }}>{title.toUpperCase()}</Text>
+           <Text style={{fontSize:15 , fontWeight:'400' , color:'white' }}>{title}</Text>
         </TouchableOpacity>
   
     );

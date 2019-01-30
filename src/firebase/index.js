@@ -47,6 +47,11 @@ export class setData extends getData {
           sections.child(uid).remove()
       }
 
+      removeAlumno=(uidSection,uidAlumnos)=>{
+        
+        sections.child(uidSection+"/alumnos/"+uidAlumnos).remove()
+    }
+
       setPerson =( uid , object, message) =>{
         const key = sections.push().key  
         sections.child(uid+'/alumnos/'+ key).set({
@@ -58,13 +63,25 @@ export class setData extends getData {
             })
         })
       }
+      editAlumnno =(uid, uidAlumnno, data)=>{
+        sections.child(uid+"/alumnos/"+uidAlumnno).update({
+            ...data
+        }).then( async() =>{
+            result = await calculate.getpeso(data, message)
+            pruebas.child(key+'/medidas_antropometricas').set({
+                 IMC:result
+             })
+         })
+    }
+
+      editSeccion =(uid, data)=>{
+          sections.child(uid).update({
+              ...data
+          })
+      }
 
       setPruebas= (data, uid )=>{
-        // this.getDataPrubebas( uid ,
-        //     (dataget)=>{
-                pruebas.child(uid+'/medidas_antropometricas').update({
-                    ...data,
-                })
-            // })
-        }
-    }
+        pruebas.child(uid+'/medidas_antropometricas').update({
+            ...data,
+        })}
+     }
