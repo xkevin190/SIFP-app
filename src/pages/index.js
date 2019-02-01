@@ -1,26 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text , Button} from 'react-native';
 import Sections from './Sections'
 import Login from  './LoginScreen'
+import  {setData} from '../firebase/index'
+import {connect} from 'react-redux'
 
-export default class DualComponent extends Component {
+const auth = new setData()
+
+ class DualComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        login:true
+        login:false
     };
   }
+
+
+
+    componentWillReceiveProps(nextProps){
+        this.forceUpdate()
+    }
+
+
 
   static navigationOptions = {
     header: null,
   };
-
+  
+  
   render() {
+    let user = this.props.user.toJS()
+    const rule1 = user.logeado === undefined? false: true
+    const rule2 = user.logeado === true? true: false
+    console.log(rule1 && rule2 )
     return (
         <>
-          { this.state.login && <Login {...this.props}/>}
-          { !this.state.login && <Sections {...this.props}/>}
+          { (rule1 && !rule2 )&& <Login {...this.props}/>}
+          { (rule1 &&  rule2 ) && <Sections {...this.props}/>}
+
         </>
     );
   }
 }
+
+const  mapStateToProps = (state)=> ({
+  user: state.init.get('user')
+})
+
+export default connect(mapStateToProps) (DualComponent)

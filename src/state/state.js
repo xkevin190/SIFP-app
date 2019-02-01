@@ -1,10 +1,7 @@
 import { Map, List } from 'immutable';
 
 export default Map({
-    logout: Map({
-        users: '',
-        password:''
-    }),
+    user: Map(undefined),
     pruebas:Map(),
     groupData:List(),
     search:'',

@@ -4,10 +4,7 @@ import store from './src/store';
 import {Provider} from 'react-redux';
 import { AppRegistry } from 'react-native';
 import AppContainer from './src/routes'
-import {setState} from './src/actions/actions'
- import NavBar from './src/pages/components/NavBar'
-
-
+import {setState, isVerify} from './src/actions/actions'
 export default class App extends Component {
   constructor(){
     super()
@@ -16,8 +13,9 @@ export default class App extends Component {
   ]
   }
   render () {
+    store.dispatch(isVerify());
     store.dispatch(setState());
-
+  
     return (
       <Provider store={store}>
         <AppContainer />

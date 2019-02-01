@@ -41,7 +41,14 @@ export const getPruebas = (id) => dispatch  =>{
        type:'DATA_PRUEBAS',
        payload:data
      })
-   } 
- )  
+   })  
 }
 
+export const isVerify = () => dispatch  =>{
+  get.verifyUsers((data) =>{ 
+     dispatch({
+       type:'VERIFYING',
+       payload:data
+     })
+   })  
+}

@@ -27,6 +27,9 @@ const test = (state = Map(), action) => {
   case 'SEARCH':{
     return search(state, 'search', action.payload)
   }
+  case 'VERIFYING':{
+    return setdata(state, 'user' , action.payload)
+  }
   default:
     return state;
   }

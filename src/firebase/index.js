@@ -33,6 +33,20 @@ var config = {
             return callback(snapshot.val())
         })
     }
+
+    verifyUsers(cb){
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                cb({
+                   email:user.email,
+                   uid: user.uid,
+                   logeado:true
+                })
+            } else {
+             cb({logeado:false})
+            }
+        });
+    }
   }
 
 export class setData extends getData {
@@ -87,18 +101,18 @@ export class setData extends getData {
         })}
      
 
-        loginUser = (value, navigation, cb) =>{
+        loginUser = (value) =>{
         auth.signInWithEmailAndPassword(value.email, value.password)
         
-        .then(()=>{
-            navigation.navigate('Sections')
-        })
-        .catch(function(error) {
+        // .then(()=>{
+        //     navigation.navigate('Sections')
+        // })
+        // .catch(function(error) {
             
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            cb(error.message)
-          });
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     cb(error.message)
+        //   });
        }    
        
        registerUser=(value, cb)=>{
