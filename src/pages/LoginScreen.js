@@ -20,7 +20,7 @@ export default class Equilibrio extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      view:'register'
+      view:'login'
      }
   }
   handleSubmit= async(values, {resetForm}) =>{
