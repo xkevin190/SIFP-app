@@ -18,6 +18,7 @@ var config = {
   const users = firebase.database().ref('users')
   const sections = firebase.database().ref('sections')
   const pruebas = firebase.database().ref('pruebas')
+  const auth = firebase.auth()
 
   export class getData { 
     getDataUser=(callback)=>{
@@ -84,4 +85,42 @@ export class setData extends getData {
         pruebas.child(uid+'/medidas_antropometricas').update({
             ...data,
         })}
-     }
+     
+
+        loginUser = (value, navigation, cb) =>{
+        auth.signInWithEmailAndPassword(value.email, value.password)
+        
+        .then(()=>{
+            navigation.navigate('Sections')
+        })
+        .catch(function(error) {
+            
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            cb(error.message)
+          });
+       }    
+       
+       registerUser=(value, cb)=>{
+        auth.createUserWithEmailAndPassword(value.email, value.password)
+        
+        .then(()=>{
+            cb('Registro exitoso')
+        })
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            cb(error.message)
+          });
+       }
+
+       sessionOff=(navigation)=>{
+           console.log('estamos en firebase')
+           auth.signOut().then( ()=>{
+             navigation.navigate('initial')
+           })
+       }
+
+       
+    
+    }

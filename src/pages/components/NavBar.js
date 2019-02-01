@@ -4,6 +4,9 @@
    import {TouchableHighlight, StyleSheet, View, TextInput , BackAndroid} from 'react-native'
    import * as Animatable from 'react-native-animatable'
    import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+   import {setData} from '../../firebase'
+   
+    const auth = new setData()
 
    class NavBar extends Component {
     _menu = null;
@@ -32,6 +35,10 @@
 
     search = (value) =>{
         this.props.search(value)
+    }
+
+    sessionOff(){
+        auth.sessionOff(this.props.navigation)
     }
    
      render() {
@@ -81,7 +88,7 @@
                                 <Icon name='more' />
                             </Button>}
                             >
-                            <MenuItem onPress={()=>navigation.navigate('Login')}>Logout</MenuItem>
+                            <MenuItem onPress={()=>this.sessionOff()}>Logout</MenuItem>
                             <MenuItem onPress={()=>BackAndroid.exitApp()}>salir</MenuItem>
                             </Menu>
                         </View>
@@ -90,7 +97,7 @@
                     </>
                 }
                 {this.state.search &&
-                <Animatable.View animation='bounceInRight' duration={100}  style={styles.search}>
+                <Animatable.View animation='slideInRight' duration={500}  style={styles.search}>
                     <Animatable.View animation={this.state.searchBarFocused  ? "fadeInLeft" : "fadeInRight"} duration={400}>
                                 <Icon type='MaterialIcons' name={"arrow-back"} 
                                   style={{fontSize:24}}
