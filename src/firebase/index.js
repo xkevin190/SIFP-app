@@ -1,6 +1,6 @@
 import firebase from 'firebase'
 import Calculate from './Fireutils';
-
+import {loading, loaded} from '../actions/actions' 
  const calculate = new Calculate()
 
 var config = {
@@ -34,19 +34,24 @@ var config = {
         })
     }
 
-    verifyUsers(cb){
-        auth.onAuthStateChanged(function(user) {
-            if (user) {
-                cb({
-                   email:user.email,
-                   uid: user.uid,
-                   logeado:true
-                })
-            } else {
-             cb({logeado:false})
-            }
-        });
-    }
+        verifyUsers(cb , loaded){
+         return new Promise( resolve => {
+            auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    console.log('el primero')
+                    resolve( cb({
+                       email:user.email,
+                       uid: user.uid,
+                       logeado:true
+                    }))
+                } else {
+                    console.log('el segundo')
+                    resolve( cb({logeado:false}))
+                }
+                
+            })
+         })
+        }
   }
 
 export class setData extends getData {
@@ -101,24 +106,25 @@ export class setData extends getData {
         })}
      
 
-        loginUser = (value) =>{
-        auth.signInWithEmailAndPassword(value.email, value.password)
-        
-        // .then(()=>{
-        //     navigation.navigate('Sections')
-        // })
-        // .catch(function(error) {
-            
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     cb(error.message)
-        //   });
-       }    
+        loginUser = (value, navigation, message , loaded) =>{
+            auth.signInWithEmailAndPassword(value.email, value.password)
+            .then(()=>{
+                loaded()
+                navigation.navigate('Sections')
+            })
+            .catch(function(error) {
+                
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                message(errorMessage)
+            });
+        }    
        
-       registerUser=(value, cb)=>{
+       registerUser=(value, cb, loaded)=>{
         auth.createUserWithEmailAndPassword(value.email, value.password)
         
         .then(()=>{
+            loaded()
             cb('Registro exitoso')
         })
         .catch(function(error) {

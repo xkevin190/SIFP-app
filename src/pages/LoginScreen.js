@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import {setData} from '../firebase/index'
 import  Toast  from '../components/Toast';
 
+
 const initialValues ={
   email:'',
   password:''
@@ -25,13 +26,13 @@ export default class Equilibrio extends Component {
   }
   handleSubmit= async(values, {resetForm}) =>{
     this.state.view === 'login'?
-    await auth.loginUser(values , this.props.navigation,
+    await this.props.login(values , this.props.navigation,
       (message)=>{
         this.setState({visible:true, message:message })
       }
       
     ):
-    await auth.registerUser(values , 
+    await this.props.register(values , 
       (message)=>{
         this.setState({visible:true, message:message ,view:'login' })
       }   
@@ -162,3 +163,5 @@ export default class Equilibrio extends Component {
     )
   }
 }
+
+

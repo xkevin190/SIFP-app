@@ -1,5 +1,7 @@
 import state from '../state/state'
 import { getData } from '../firebase'
+
+
 export const TEST_ACTION = 'TEST_ACTION';
 
 export function setState() {
@@ -11,6 +13,7 @@ export function setState() {
 
 const get = new getData()
 export const sectionsData = () => dispatch  =>{
+ 
    get.getDataUser( (data) =>{ 
       dispatch({
         type:'DATA_SECTIONS',
@@ -34,7 +37,6 @@ export function logout(users) {
     }
   }
 
-
 export const getPruebas = (id) => dispatch  =>{
   get.getDataPrubebas(id, (data) =>{ 
      dispatch({
@@ -45,10 +47,13 @@ export const getPruebas = (id) => dispatch  =>{
 }
 
 export const isVerify = () => dispatch  =>{
+  dispatch({type:'LOADING'})
   get.verifyUsers((data) =>{ 
-     dispatch({
-       type:'VERIFYING',
-       payload:data
-     })
-   })  
+    dispatch({
+      type:'VERIFYING',
+      payload:data
+    })
+  }).then(()=>{
+    dispatch({type:'LOADED'})
+  })
 }

@@ -30,6 +30,7 @@ const test = (state = Map(), action) => {
   case 'VERIFYING':{
     return setdata(state, 'user' , action.payload)
   }
+ 
   default:
     return state;
   }

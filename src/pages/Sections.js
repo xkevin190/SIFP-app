@@ -131,7 +131,8 @@ class Sections extends Component {
 const mapStateToProps = (data) => ({
   jobsGrup: data.init.get('groupData'),
   setAction: new setData(),
-  search: data.init.get('search')
+  search: data.init.get('search'),
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet} from 'react-native'
 import {Modal, Text, View,} from 'react-native';
-import { Form, Item, Input, Label  ,Radio, Content } from 'native-base';
+import {Label  ,Radio, Content } from 'native-base';
 import { Formik } from 'formik'
 import * as yup from 'yup'  
 import InputField from '../../components/Input'
@@ -49,14 +49,13 @@ const validationSchema = yup.object().shape({
 export default class RegisterIntegrante extends Component {   
     onSubmit = async (values,{ resetForm}) => { 
         if(this.props.update === null){
-            console.log('dios 2')
             await this.props.register(
                 this.props.uidSection,
                 values,
                 this.props.message
             )
         }else{
-            console.log('dios1')
+           
             this.props.updateAction(
                 this.props.uidSection, 
                 this.props.update,
@@ -69,7 +68,6 @@ export default class RegisterIntegrante extends Component {
     }
 
     render(){
-        const valueInput = this.state
         return(
             <View  >
                 <Modal

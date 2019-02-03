@@ -45,7 +45,7 @@
         const {navigation} = this.props
        return (
             <Header style={{backgroundColor:'#004d40' }} androidStatusBarColor='#004d40' >
-                { (navigation.state.routeName !== 'Sections' && !this.state.search) &&
+                { (navigation.state.routeName !== 'initial' && !this.state.search) &&
                 <Left style={{position:'absolute', left:10}}>
                 <TouchableHighlight 
                  underlayColor='#eeeeee'
