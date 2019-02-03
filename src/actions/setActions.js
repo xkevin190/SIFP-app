@@ -21,10 +21,16 @@ export const loaded = ()  =>{
       )
   }
 
-    
   export const register = (values,  cb) => dispatch => {
     dispatch(loading())
     setActions.registerUser(values , cb , ()=>
       dispatch(loaded())  
     )
-}
+  }
+
+  export const registerAlumno = (uid,  values , message , callback) => dispatch => { 
+    dispatch(loading())
+    setActions.setPerson(uid , values , message, callback, ()=>
+      dispatch(loaded())  
+    )
+  }

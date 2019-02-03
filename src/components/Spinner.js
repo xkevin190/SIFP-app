@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ActivityIndicator , Modal } from 'react-native';
 
 const componentName = ({ params }) => (
-
+    
     <Modal
                   
     animationType="fade"

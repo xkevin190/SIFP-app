@@ -12,7 +12,6 @@ class AppContainer extends Component {
    }
  
    render() {
-     console.log('global index', this.props)
      return (
        <>
          {this.props.loading && <Spinner/> }

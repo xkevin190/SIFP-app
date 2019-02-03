@@ -6,6 +6,7 @@ import { Formik } from 'formik'
 import * as yup from 'yup'  
 import InputField from '../../components/Input'
 import Button from '../../components/Button'
+import Toast from '../../components/Toast'
 
 const defaultvalue={
     nombre:'',
@@ -46,13 +47,30 @@ const validationSchema = yup.object().shape({
 
   });
 
-export default class RegisterIntegrante extends Component {   
+export default class RegisterIntegrante extends Component {
+    state={
+        visible:false,
+        message:''
+    }   
+
+    componentWillUpdate() {
+        if(this.state.visible){
+          setTimeout(() => {
+            this.setState({visible:false})
+          }, 1000);
+        }
+      }
+    
+
     onSubmit = async (values,{ resetForm}) => { 
         if(this.props.update === null){
             await this.props.register(
                 this.props.uidSection,
                 values,
-                this.props.message
+                this.props.message,
+                (message)=>{
+                    this.setState({visible: true , message: message})
+                }
             )
         }else{
            
@@ -69,7 +87,9 @@ export default class RegisterIntegrante extends Component {
 
     render(){
         return(
+     
             <View  >
+                 <Toast visible={this.state.visible} message={this.state.message}/>
                 <Modal
                   
                     animationType="fade"
@@ -86,6 +106,7 @@ export default class RegisterIntegrante extends Component {
                         
                      return(
                         < Content>
+                        
                             <View style={{padding:20 }}>
                                 
                                 <Text style={{ padding:20,fontSize:24, textAlign:'center'}}

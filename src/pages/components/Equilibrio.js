@@ -25,7 +25,6 @@ export default class Equilibrio extends Component {
     this.state = { count: 0 }
   }
   handleSubmit=(values)=>{
-    console.log('hello ',values)
   }
 
   onPress = () => {

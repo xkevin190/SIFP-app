@@ -11,7 +11,6 @@ export default class ViewResult extends Component {
 
 
   render() {
-    console.log( this.props.data)
     return (
       <Container style={{paddingHorizontal:20 }}>
         <Content>

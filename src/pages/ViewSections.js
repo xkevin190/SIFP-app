@@ -6,6 +6,7 @@ import RegisterIntegrante from './components/RegisterIntegrante';
 import {GetDataPerson} from '../utils/Validator'
 import {connect} from 'react-redux'
 import {searchData} from '../actions/actions'
+import {registerAlumno } from '../actions/setActions'
 import NavBar from './components/NavBar'
 import Confirm from '../components/Confirm'
 
@@ -64,7 +65,6 @@ class ViewSections extends Component {
        })
      : alumnos;
 
-     console.log(params)
     return (
       <> 
          {this.state.delete &&
@@ -81,7 +81,7 @@ class ViewSections extends Component {
         <RegisterIntegrante modalVisible={this.state.modalVisible} 
            close={this.closeModal}
            uidSection={params.data.uid}
-           register={params.setPerson}
+           register={this.props.register}
            message={this.props.message}
            update={this.state.update}
            updateAction={params.editAlumnno}
@@ -151,7 +151,9 @@ const mapStateToProps = (data) => ({
 const mapDispatchToProps=(dispatch) => ({
   searchData: (data)=>{
     dispatch(searchData(data))
-  }
+  },
+  register:(uid,  values , message, callback)=>
+     dispatch(registerAlumno(uid,  values , message, callback))
 })
 
 

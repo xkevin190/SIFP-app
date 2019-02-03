@@ -5,7 +5,6 @@ import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 
 export default function Confirm({...obj}) {
-    console.log('hello', obj)
     return (
         <ConfirmDialog
             title={obj.title}

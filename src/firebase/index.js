@@ -38,14 +38,12 @@ var config = {
          return new Promise( resolve => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    console.log('el primero')
                     resolve( cb({
                        email:user.email,
                        uid: user.uid,
                        logeado:true
                     }))
                 } else {
-                    console.log('el segundo')
                     resolve( cb({logeado:false}))
                 }
                 
@@ -72,7 +70,7 @@ export class setData extends getData {
         sections.child(uidSection+"/alumnos/"+uidAlumnos).remove()
     }
 
-      setPerson =( uid , object, message) =>{
+      setPerson =( uid , object, message, response ,loaded) =>{
         const key = sections.push().key  
         sections.child(uid+'/alumnos/'+ key).set({
             ...object
@@ -81,8 +79,15 @@ export class setData extends getData {
            pruebas.child(key+'/medidas_antropometricas').set({
                 IMC:result
             })
+        }).then( ()=> {
+            loaded(); 
+            response('Registrado Correctamente')  
+        }).catch( error =>{
+            console.log(error)
         })
+                
       }
+
       editAlumnno =(uid, uidAlumnno, data)=>{
         sections.child(uid+"/alumnos/"+uidAlumnno).update({
             ...data
@@ -135,7 +140,7 @@ export class setData extends getData {
        }
 
        sessionOff=(navigation)=>{
-           console.log('estamos en firebase')
+
            auth.signOut().then( ()=>{
              navigation.navigate('initial')
            })

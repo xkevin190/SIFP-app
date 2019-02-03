@@ -14,7 +14,7 @@ const core = new CoreFuctions()
 
 class Alumno extends Component {
   constructor(props) {
-    console.ignoredYellowBox = ['Setting a timer'];
+
     super(props);
     this.state = {
       selected: "medidas_antropometricas",
