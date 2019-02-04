@@ -1,12 +1,11 @@
 import { Map, List } from 'immutable';
 
 export default Map({
-    logout: Map({
-        users: '',
-        password:''
-    }),
+    user: Map(undefined),
     pruebas:Map(),
     groupData:List(),
+    search:'',
+    loading:false,
     testMessage: Map({
         recomendacion:`Consultar Nutricionista Realizar trabajos con pesasbajo supervisión de unexperto en Educación física.`,
         recomendacion2:`Mantener tu peso`,

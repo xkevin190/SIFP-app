@@ -1,73 +1,176 @@
-import React, {Component} from 'react';
-import { Container,  Content, Button, Form, Item, Input, Label,Text  } from 'native-base';
-import {StyleSheet} from 'react-native';
-import {logout} from '../actions/actions'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import InputField from '../components/Input'
+import Button from '../components/Button'
+import {View , Text , ScrollView} from 'react-native'
+import {Formik} from 'formik'
+import * as yup from 'yup';
+import {setData} from '../firebase/index'
+import  Toast  from '../components/Toast';
+
+
+const initialValues ={
+  email:'',
+  password:''
+}
+
+const auth = new setData()
 
 
 
- class LoginScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-          isShowingText: 'hello word',
-          users:'',
-          password:''
-        };
+export default class Equilibrio extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { 
+      view:'login',
+      visible:false
+     }
+  }
+  handleSubmit= async(values, {resetForm}) =>{
+    this.state.view === 'login'?
+    await this.props.login(values , this.props.navigation,
+      (message)=>{
+        this.setState({visible:true, message:message })
       }
-    static navigationOptions = {
-        header: null,
-    };
+      
+    ):
+    await this.props.register(values , 
+      (message)=>{
+        this.setState({visible:true, message:message ,view:'login' })
+      }   
+    )
+    
+    resetForm(initialValues)
+  }
+  
+  static navigationOptions = {
+    header: null,
+  };
+  
+  componentWillUpdate() {
+    if(this.state.visible){
+      setTimeout(() => {
+        this.setState({visible:false})
+      }, 1000);
+    }
+  }
 
-    helloword = (event) =>{
-       const data={
-        users:this.state.user,
-        password: this.state.password
-       }
-       this.props.logout(data)
-   }
-    render() {
-        // console.log(this.props)
-        return (
-            <Container style={{padding:20 , backgroundColor:'#FFFFFF'}}>
-                <Content>
-                    <Form>
-                        <Item floatingLabel>
-                        <Label>Username</Label>
-                        <Input onChangeText={(text)=>{this.setState({user:text})}}
-                        />
-                        </Item>
-                        <Item floatingLabel last>
-                        <Label>Password</Label>
-                        <Input 
-                            onChangeText={(text)=>{this.setState({password:text})}} 
-                            secureTextEntry
-                        />
-                        </Item>
-                    </Form> 
-                        <Button style={styles.dios} primary full onPress={()=>this.props.navigation.navigate('Sections')}><Text>bueno hay vamos</Text></Button>
-                </Content>
-        </Container>
-        );
+
+ render() {
+    let validationSchema 
+      if(this.state.view === 'register'){
+       validationSchema = yup.object().shape({
+      email: yup
+        .string()
+        .email('El Email no es valido')
+        .required(),
+      password: yup
+        .string()
+        .label('Password')
+        .required('La contraseña es requerida'),
+        passwordConfirm:yup.string()
+        .oneOf([yup.ref('password'), null], 'La contraseña no coincide ' )
+        .required('confirmacion de contraseña es requerida')
+      });
+    
+    }else{
+       validationSchema = yup.object().shape({
+        email: yup
+          .string()
+          .email('El Email no es valido')
+          .required(),
+        password: yup
+          .string()
+          .label('Password')
+          .required('La contraseña es requerida'),
+        
+      });
+    }  
+   
+    return (
+        <>
+        <Toast visible={this.state.visible} message={this.state.message}/>
+        <Formik
+          InitialValues={initialValues}
+          onSubmit={this.handleSubmit}
+          validationSchema={validationSchema}
+          render = {({values , handleSubmit, setFieldValue, errors }) =>(
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow:1 , alignItems:'center',paddingBottom:40
+                }}
+              >  
+                <View>
+                    <Text style={{fontSize:65, paddingBottom:40, paddingTop:15 , color:'#004d40'}}>S I P F</Text>
+                </View> 
+               <View style={{width:'90%'}} > 
+                    <InputField label='Correo'
+                    value={values.email}
+                    onChange={setFieldValue}
+                    name='email'
+                    keyboardType='email-address'
+                    error={errors.email}
+    
+        
+                    />
+                    <InputField label ='Contraseña' 
+                    value={values.password}
+                    onChange={setFieldValue}
+                    name='password'
+                    error={errors.password}
+                    secureTextEntry
+
+                    />
+                    { this.state.view === 'register' &&
+                      <InputField label ='Confirmar contraseña' 
+                      value={values.passwordConfirm}
+                      onChange={setFieldValue}
+                      name='passwordConfirm'
+                      error={errors.passwordConfirm}
+                      secureTextEntry
+                      />
+                    }
+                </View>
+                { this.state.view === 'register' &&
+                <View style={{display:'flex', flexDirection: 'row'}}>
+            
+                    <Button 
+                    title='ATRAS'
+                    type='secondary'
+                    handleSubmit={()=>{this.setState({view:'login'})}}
+                    />
+
+                    <Button 
+                    title='GUARDAR'
+                    type='primary'
+                    handleSubmit={handleSubmit}    
+                    />
+                </View>
+                }
+                  
+                { this.state.view === 'login' &&
+                <View style={{display:'flex', flexDirection: 'row'}}>
+            
+                    <Button 
+                    title='REGISTRAR'
+                    type='primary'
+                    handleSubmit={()=>{this.setState({view:'register'})}}
+                    />
+
+                    <Button 
+                    title='LOGIN'
+                    type='primary'
+                    handleSubmit={handleSubmit}    
+                    />
+                </View>
+                }
+              </ScrollView>
+    
+          )}
+            
+      />  
+      </>
+    )
   }
 }
 
-const mapStateToProps = (state) => ({
-    state
-  });
-  
-  const mapDispatchToProps = (dispatch) => ({
-    logout:logout
-  });
-  
-  export default connect(mapStateToProps,{logout})(LoginScreen);
 
-
-const styles = StyleSheet.create({
-    dios: {
-     marginTop:20
-    },
-    red: {
-      color: 'red',
-    },
-  });

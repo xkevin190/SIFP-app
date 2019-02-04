@@ -11,11 +11,12 @@ export default class ViewResult extends Component {
 
 
   render() {
+    console.log('data', this.props.data)
     return (
-      <Container style={{padding:20}}>
+      <Container style={{paddingHorizontal:20 }}>
         <Content>
             <Text style={{fontSize:24, textAlign:'center', paddingBottom:15}}>Resultados Obtenidos </Text>
-            <View style={{display:'flex' ,  flexDirection:'row', alignItems: 'center',  borderBottomWidth:1,
+            <View style={{display:'flex' ,  flexDirection:'row', alignItems: 'center',  borderBottomWidth:0.5,
               borderColor:'#dbead8', }}> 
             
               <Image source={this.props.logo.url}
@@ -29,7 +30,7 @@ export default class ViewResult extends Component {
             { (this.props.data.length > 0) &&
               this.props.data.map( (result ) =>{
                 return (  
-                  <View key={result.key} style={{borderBottomWidth:1,borderColor:'#dbead8',}} >
+                  <View key={result.key} style={{borderBottomWidth:1,borderColor:'#dbead8', paddingBottom:10}} >
                     <View style={{
                       display:'flex',
                       flexDirection:'row',
@@ -46,7 +47,16 @@ export default class ViewResult extends Component {
                       <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
                       <Text style={{paddingRight:20}}>{result.resultado}</Text>
                     </View>
-                   { (result.recomendacion && result.recomendacion !== '' ) &&  <Text style={{
+                   {(result.theoristData ) &&   
+                   <View style={{
+                      display:'flex',
+                      flexDirection:'row',
+                      paddingTop:10
+                    }}>
+                      <Text style={{paddingRight:10, fontWeight:'bold'}}>Tensión Arterial Teorica:</Text>
+                      <Text style={{paddingRight:20}}>{result.theoristData}</Text>
+                    </View>}
+                   { (result.recomendacion !== '' ) &&  <Text style={{
                       display:'flex',
                       flexDirection:'row',
                       paddingTop:10,

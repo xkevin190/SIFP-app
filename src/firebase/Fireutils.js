@@ -14,7 +14,7 @@ export default class Calculate {
         const estatura = value.estatura /100
         const resultPeso =  Number(value.peso ) / (  Number(estatura) * Number(estatura)) 
         const result =  await this.pesoResult(resultPeso, message)
-      return  {...result , IndiceDeMasaCoporal: resultPeso.toFixed(2)  } 
+      return  {...result , data: resultPeso.toFixed(2)  } 
     }   
 
     getIndiceCC(){
