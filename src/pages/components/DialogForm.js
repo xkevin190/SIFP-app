@@ -5,9 +5,10 @@ import InputField from '../../components/Input'
 import {Formik} from 'formik'
 import * as yup from 'yup';
 import Button from '../../components/Button'
+
 const initialValues ={
-    name:'hello',
-    caracteristicas:'world'
+    name:'',
+    caracteristicas:''
   }
   
   const validationSchema = yup.object().shape({
@@ -33,13 +34,15 @@ export default class DialogForm extends Component {
             this.props.close()
         }else{
             
-            this.props.updateAction(this.props.update, value)
+            this.props.updateAction(this.props.update.uid, value)
             this.props.close()
         }
         
     }
 
     render(){
+        value = this.props.update !==  null? this.props.update : initialValues
+        console.log(value)
         return(
             <Dialog
                 visible={this.props.modalVisible}
@@ -54,7 +57,7 @@ export default class DialogForm extends Component {
                 </Text>
                 <Form>
                     <Formik
-                        InitialValues={initialValues}
+                        initialValues={value}
                         onSubmit={this.onSubmit}
                         validationSchema={validationSchema}
                         render = {({values , handleSubmit, setFieldValue, errors }) =>(
@@ -82,7 +85,6 @@ export default class DialogForm extends Component {
                                 </View>
                             </> 
                         )}
-
                             
                     />  
                 </Form> 

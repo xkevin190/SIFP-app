@@ -33,7 +33,7 @@ const auth = new setData()
         <>
   
           { (rule1 && !rule2 )&& <Login {...this.props}/>}
-          { (rule1 &&  rule2 ) && <Sections {...this.props}/>}
+          { (rule1 &&  rule2  ) && <Sections {...this.props}/>}
 
         </>
     );
@@ -42,7 +42,7 @@ const auth = new setData()
 
 const  mapStateToProps = (state)=> ({
   user: state.init.get('user'),
-  loading: state.init.get('loading')
+  loading: state.user.get('loading')
 })
 const mapDispatchToProps=(dispatch) =>({
   login: (values, navigation , callback) =>{

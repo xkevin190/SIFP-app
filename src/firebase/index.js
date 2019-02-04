@@ -1,6 +1,6 @@
 import firebase from 'firebase'
 import Calculate from './Fireutils';
-import {loading, loaded} from '../actions/actions' 
+
  const calculate = new Calculate()
 
 var config = {
@@ -20,63 +20,69 @@ var config = {
   const pruebas = firebase.database().ref('pruebas')
   const auth = firebase.auth()
 
-  export class getData { 
+export class getData { 
     getDataUser=(callback)=>{
-        sections.on('value', function(snapshot) {
-            const data = !snapshot.val() ? [] : Object.values(snapshot.val()) 
-            return callback(data)
-        });    
+        return new Promise( resolve => {
+            sections.orderByChild('uidUser').equalTo(auth.currentUser.uid).on('value', function(snapshot) {
+                const data = !snapshot.val() ? [] : Object.values(snapshot.val()) 
+                resolve( callback(data) )
+            });
+        })              
     }
 
-    getDataPrubebas(id , callback){
-        pruebas.child(id).on('value' ,function(snapshot){
-            return callback(snapshot.val())
-        })
+    async getDataPrubebas(id , callback){
+       return new Promise( resolve => {
+            pruebas.child(id).on('value' ,function(snapshot){
+                resolve(callback(snapshot.val()))
+            })
+        })        
     }
 
-        verifyUsers(cb , loaded){
-         return new Promise( resolve => {
+    verifyUsers(cb){
+        return new Promise( resolve => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
                     resolve( cb({
-                       email:user.email,
-                       uid: user.uid,
-                       logeado:true
+                        email:user.email,
+                        uid: user.uid,
+                        logeado:true
                     }))
                 } else {
                     resolve( cb({logeado:false}))
                 }
                 
             })
-         })
-        }
-  }
+        })
+    }
+}
 
 export class setData extends getData {
+    
     setSections =(data)=>{
-    const key = sections.push().key
-    sections.child(key).set({
-        uid:key,
-        ...data
-    })
+  
+        const key = sections.push().key
+        sections.child(key).set({
+            uid:key,
+            ...data,
+            uidUser: auth.currentUser.uid
+        })
     }
 
-      removeSections=(uid)=>{
-          sections.child(uid).remove()
-      }
+    removeSections=(uid)=>{
+        sections.child(uid).remove()
+    }
 
-      removeAlumno=(uidSection,uidAlumnos)=>{
-        
+    removeAlumno=(uidSection,uidAlumnos)=>{
         sections.child(uidSection+"/alumnos/"+uidAlumnos).remove()
     }
 
-      setPerson =( uid , object, message, response ,loaded) =>{
+    setPerson =( uid , object, message, response ,loaded) =>{
         const key = sections.push().key  
         sections.child(uid+'/alumnos/'+ key).set({
             ...object
         }).then( async() =>{
-           result = await calculate.getpeso(object, message)
-           pruebas.child(key+'/medidas_antropometricas').set({
+            result = await calculate.getpeso(object, message)
+            pruebas.child(key+'/medidas_antropometricas').set({
                 IMC:result
             })
         }).then( ()=> {
@@ -85,49 +91,59 @@ export class setData extends getData {
         }).catch( error =>{
             console.log(error)
         })
-                
-      }
-
-      editAlumnno =(uid, uidAlumnno, data)=>{
-        sections.child(uid+"/alumnos/"+uidAlumnno).update({
-            ...data
-        }).then( async() =>{
-            result = await calculate.getpeso(data, message)
-            pruebas.child(key+'/medidas_antropometricas').set({
-                 IMC:result
-             })
-         })
+            
     }
 
-      editSeccion =(uid, data)=>{
-          sections.child(uid).update({
-              ...data
-          })
-      }
+    editAlumnno =(uid, uidAlumnno, data ,loaded)=>{
+        sections.child(uid+"/alumnos/"+uidAlumnno).update({
+            ...data
+        }).then( ()=>{  
+            loaded()
+        })
 
-      setPruebas= (data, uid )=>{
+        // .then( async() =>{
+        //     result = await calculate.getpeso(data, message)
+        //     pruebas.child(key+'/medidas_antropometricas').set({
+        //          IMC:result
+        //      })
+        //  })
+    }
+
+    editSeccion =(uid, data)=>{
+        sections.child(uid).update({
+            ...data
+        })
+    }
+
+    setPruebas= (data, uid )=>{
         pruebas.child(uid+'/medidas_antropometricas').update({
             ...data,
-        })}
+        })
+    }
      
 
-        loginUser = (value, navigation, message , loaded) =>{
-            auth.signInWithEmailAndPassword(value.email, value.password)
-            .then(()=>{
-                loaded()
-                navigation.navigate('Sections')
-            })
-            .catch(function(error) {
-                
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                message(errorMessage)
-            });
-        }    
+    loginUser = (value, navigation, message , loaded) =>{
+        auth.signInWithEmailAndPassword(value.email, value.password)
+        .then(()=>{
+            loaded()
+            navigation.navigate('Sections')
+        })
+        .catch(function(error) {
+            
+            loaded()
+            var errorMessage = error.message;
+            message(errorMessage)
+        });
+    }    
        
-       registerUser=(value, cb, loaded)=>{
+    registerUser=(value, cb, loaded)=>{
         auth.createUserWithEmailAndPassword(value.email, value.password)
-        
+        .then( (data)=>{
+            users.child(data.user.uid).set({
+                email:data.user.email,
+                uid: data.user.uid,
+            })
+        })
         .then(()=>{
             loaded()
             cb('Registro exitoso')
@@ -136,16 +152,15 @@ export class setData extends getData {
             var errorCode = error.code;
             var errorMessage = error.message;
             cb(error.message)
-          });
-       }
-
-       sessionOff=(navigation)=>{
-
-           auth.signOut().then( ()=>{
-             navigation.navigate('initial')
-           })
-       }
-
-       
-    
+            loaded()
+        });
     }
+
+    sessionOff=(navigation)=>{
+
+        auth.signOut().then( ()=>{
+            navigation.navigate('initial')
+        })
+    }
+   
+}

@@ -31,8 +31,8 @@ export default class CoreFuctions   {
 }  
 
 calculateAntropometricas = async (data, personData, message) => {
-    console.log(personData)
-    const ICC= await calculateICC( data.cintura , data.cadera , personData, message  )
+    obj={}
+    const ICC= await calculateICC( {cintura:data.cintura , cadera:data.cadera} , personData, message  )
     const TA = await calculateTA(
         {sistolica: data.presionSistolica,
         distolica: data.presionDistolica},
@@ -42,7 +42,11 @@ calculateAntropometricas = async (data, personData, message) => {
     const FC = await calculateFC(data.selected , data.cardiacaData, message)
     const FR = await calculateFR(data.respiratoriaData , data.selected,message)
 //    const CC = await calculateCC({ pecho: data.pecho , abdomen:data.abdomen , muslo: data.muslo } , personData, message) 
- set.setPruebas({ ICC, TA, FC, FR} ,personData.uid)
+   if(ICC){ obj.ICC = ICC}
+   if(TA){ obj.TA = TA}
+   if(FC){ obj.FC =FC}
+   if(FR){ obj.FR = FR}
+   set.setPruebas( obj ,personData.uid)
 }
 
 calculateFlexibilidadArticular = async(data, personData, message) =>{
@@ -51,12 +55,13 @@ calculateFlexibilidadArticular = async(data, personData, message) =>{
 }
 
 
-calculateICC = async(cintura, cadera, persona, message )=>{
-    const result= Number(cintura)/Number(cadera)
+calculateICC = async(data, persona, message )=>{
+    if(data.cintura === '' && data.cadera === ''){ return undefined }
+    const result= Number(data.cintura)/Number(data.cadera)
     let obj = {
         data:result.toFixed(2)
     }
-    console.log(cintura, cadera, message ,persona)
+  
     if(persona.sexo === 'hombre'){
         if(result < 0.95){
             obj ={
@@ -101,6 +106,7 @@ calculateICC = async(cintura, cadera, persona, message )=>{
 }
 
 calculateTA = (data, persondata, message)=>{
+    if(data.sistolica === '' && data.distolica === ''){ return undefined }
     let theoristSistolica, theoristDistolica
     if(persondata.sexo === 'hombre'){
         theoristSistolica = 109  + (0.5 * Number(persondata.edad ) )  +  (0.1 * Number(persondata.peso));
@@ -125,18 +131,19 @@ calculateTA = (data, persondata, message)=>{
 }
 
 calculateFC = (type, data, message) =>{
+    if(data === ''){ return undefined }
     console.log(type)
     const obj ={
         data:data,
         recomendacion:''
         }
-       if(data > 59  && data < 90 ){obj.resultado = message.FC1 }
+       if(data > 59  && data <= 90 ){obj.resultado = message.FC1 }
        else if(data > 35 && data < 60 ){ 
             obj.resultado = type !== 'Adultos'? 
             message.FC1 : message.FC2
        } else if(data > 90){ 
            obj.resultado = message.FC3
-           obj.recomendacion = message.recomendacion3 
+           obj.recomendacion = message.recomendacion4
        } else if (data < 36){
            obj.resultado = message.FC4
            obj.recomendacion = message.recomendacion4 
@@ -147,12 +154,13 @@ calculateFC = (type, data, message) =>{
 
 
 calculateFR = (data, type , message)=>{
-    console.log(type)
+    if(data === ''){ return undefined }
+    console.log('!!!!!!!!!!!!!!!!!', data)
     const obj ={
         data:data,
         recomendacion:''
         }
-       if(data > 11  && data < 21 ){obj.resultado = message.TA2 }
+       if(data > 11  && data <= 25 ){obj.resultado = message.TA2 }
        else if(data > 35 && data < 60 ){ 
           
        } else if(data < 12){ 
@@ -162,7 +170,8 @@ calculateFR = (data, type , message)=>{
            obj.resultado = message.FR2
            obj.recomendacion = message.recomendacion4 
        }
-
+    
+       console.log(obj , message.recomendacion4)
     return obj
 }
 
@@ -177,6 +186,7 @@ calculateCC =(data, dataPerson, message) =>{
 }
 
   calculateSA = (data, sexo, message) =>{
+    console.log('4', typeof data)
     let result; 
     if(sexo === 'hombre'){
         if(data < -20){result = message.evaluacion1
@@ -202,6 +212,7 @@ calculateCC =(data, dataPerson, message) =>{
 
 
   calculateFCA = (data, message) =>{
+    console.log('4', data === '')
     let result ={
         data: data,
     }; 

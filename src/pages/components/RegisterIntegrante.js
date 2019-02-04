@@ -76,8 +76,8 @@ export default class RegisterIntegrante extends Component {
            
             this.props.updateAction(
                 this.props.uidSection, 
-                this.props.update,
-                values
+                this.props.update.uid,
+                values,
             )
             this.props.close()   
         }
@@ -86,8 +86,8 @@ export default class RegisterIntegrante extends Component {
     }
 
     render(){
+        value = this.props.update !==  null? this.props.update : defaultvalue
         return(
-     
             <View  >
                  <Toast visible={this.state.visible} message={this.state.message}/>
                 <Modal
@@ -99,7 +99,7 @@ export default class RegisterIntegrante extends Component {
                         this.props.close()
                     }}>
                 <Formik
-                    initialValues={defaultvalue}
+                    initialValues={value}
                     onSubmit={this.onSubmit}
                     validationSchema={validationSchema}
                     render = {({values , handleSubmit, setFieldValue, errors, resetForm }) =>{

@@ -6,7 +6,7 @@ import RegisterIntegrante from './components/RegisterIntegrante';
 import {GetDataPerson} from '../utils/Validator'
 import {connect} from 'react-redux'
 import {searchData} from '../actions/actions'
-import {registerAlumno } from '../actions/setActions'
+import {registerAlumno ,editAlumno } from '../actions/setActions'
 import NavBar from './components/NavBar'
 import Confirm from '../components/Confirm'
 
@@ -15,7 +15,7 @@ class ViewSections extends Component {
     super(props);
     this.state = {
       modalVisible: false,
-      uid:'',
+      alumno:'',
       delete:false,
       update:null
     };
@@ -41,7 +41,11 @@ class ViewSections extends Component {
   }
 
   closeModal =()=>{
-    this.setState({modalVisible:false , update:null})
+    this.setState({
+      modalVisible:false , 
+      update:null,
+      uid:null
+    })
    
   }
 
@@ -84,7 +88,7 @@ class ViewSections extends Component {
            register={this.props.register}
            message={this.props.message}
            update={this.state.update}
-           updateAction={params.editAlumnno}
+           updateAction={this.props.editAlumno}
           
         />
         <View 
@@ -116,14 +120,14 @@ class ViewSections extends Component {
                       <Text>{alumno.nombre} {alumno.apellido}</Text>
                     </Left>
                     <View style ={{display:'flex' , flexDirection:'row'   }} >
-                    <Button transparent onPress={()=>{this.setState({modalVisible:true ,update:alumno.uid })}} >
-                        <Icon style={{color:'#00695c'}} type='MaterialIcons' name='edit'/>
+                    <Button transparent onPress={()=>{this.setState({modalVisible:true ,update:alumno})}} >
+                        <Icon style={{color:'#26a69a'}} type='MaterialIcons' name='edit'/>
                       </Button>
-                      <Button transparent onPress={()=>this.setState({delete:true ,uid:alumno.uid })}>
-                        <Icon style={{color:'#00695c'}}   type='MaterialIcons' name='delete'/>
+                      <Button transparent onPress={()=>this.setState({delete:true ,uid:alumno.uid})}>
+                        <Icon style={{color:'#26a69a'}}   type='MaterialIcons' name='delete'/>
                       </Button>
                      <Button  transparent  onPress={()=>{this.go(alumno)}} >
-                        <Icon style={{color:'#00695c'}}   type='MaterialIcons' name='visibility'/>
+                        <Icon style={{color:'#26a69a'}}   type='MaterialIcons' name='visibility'/>
                       </Button>
                     </View>
                   </ListItem>
@@ -153,7 +157,10 @@ const mapDispatchToProps=(dispatch) => ({
     dispatch(searchData(data))
   },
   register:(uid,  values , message, callback)=>
-     dispatch(registerAlumno(uid,  values , message, callback))
+     dispatch(registerAlumno(uid,  values , message, callback)),
+
+  editAlumno: (uid,  uidAlumnno  , values )=>
+     dispatch(editAlumno(uid,  uidAlumnno  , values ))
 })
 
 

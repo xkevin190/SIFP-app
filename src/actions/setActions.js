@@ -34,3 +34,10 @@ export const loaded = ()  =>{
       dispatch(loaded())  
     )
   }
+
+  export const editAlumno = (uid,  uidAlumnno  , values , ) => dispatch => { 
+    dispatch(loading())
+    setActions.editAlumnno(uid , uidAlumnno , values, ()=>
+      dispatch(loaded())  
+    )
+  }

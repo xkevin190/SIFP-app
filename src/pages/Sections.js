@@ -103,11 +103,11 @@ class Sections extends Component {
                       <Text note numberOfLines={1}>{seciones.alumnos?Object.keys(seciones.alumnos).length: 0} Ingregantes</Text>
                     </Body>
                     <Right style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-                      <Button transparent onPress={()=>{this.setState({modalVisible:true ,update:seciones.uid })}} >
-                        <Icon style={{color:'#00695c'}} type='MaterialIcons' name='edit'/>
+                      <Button transparent onPress={()=>{this.setState({modalVisible:true ,update:seciones })}} >
+                        <Icon style={{color:'#26a69a'}} type='MaterialIcons' name='edit'/>
                       </Button>
                       <Button transparent onPress={()=>this.setState({delete:true ,uid:seciones.uid })}>
-                        <Icon style={{color:'#00695c'}}   type='MaterialIcons' name='delete'/>
+                        <Icon style={{color:'#26a69a'}}   type='MaterialIcons' name='delete'/>
                       </Button>
                     </Right>
                   </ListItem>

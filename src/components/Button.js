@@ -11,7 +11,7 @@ export default class componentName extends Component {
   render() {
       const {title , type , handleSubmit } = this.props
      const color ={
-         primary: '#004d40',
+         primary: '#26a69a',
          secondary: '#d50000'
      }
     return (

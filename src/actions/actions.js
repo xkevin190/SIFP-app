@@ -13,37 +13,23 @@ export function setState() {
 
 const get = new getData()
 export const sectionsData = () => dispatch  =>{
- 
+   dispatch({type:'LOADING'})
    get.getDataUser( (data) =>{ 
       dispatch({
         type:'DATA_SECTIONS',
         payload:data
       })
-    } 
-  )  
+    }).then( ()=>dispatch({type:'LOADED'}) )  
 }
-
-export function searchData (data){
-  return {
-    type:'SEARCH',
-    payload:data
-  }
-}
-
-export function logout(users) {
-    return {
-      type: 'LOGOUT',
-      users
-    }
-  }
 
 export const getPruebas = (id) => dispatch  =>{
+  dispatch({type:'LOADING'})
   get.getDataPrubebas(id, (data) =>{ 
      dispatch({
        type:'DATA_PRUEBAS',
        payload:data
      })
-   })  
+  }).then(()=> dispatch({type:'LOADED'}))
 }
 
 export const isVerify = () => dispatch  =>{

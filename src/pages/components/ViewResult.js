@@ -11,6 +11,7 @@ export default class ViewResult extends Component {
 
 
   render() {
+    console.log('data', this.props.data)
     return (
       <Container style={{paddingHorizontal:20 }}>
         <Content>
@@ -46,6 +47,15 @@ export default class ViewResult extends Component {
                       <Text style={{paddingRight:10, fontWeight:'bold'}}>Resultado:</Text>
                       <Text style={{paddingRight:20}}>{result.resultado}</Text>
                     </View>
+                   {(result.theoristData ) &&   
+                   <View style={{
+                      display:'flex',
+                      flexDirection:'row',
+                      paddingTop:10
+                    }}>
+                      <Text style={{paddingRight:10, fontWeight:'bold'}}>Tensión Arterial Teorica:</Text>
+                      <Text style={{paddingRight:20}}>{result.theoristData}</Text>
+                    </View>}
                    { (result.recomendacion !== '' ) &&  <Text style={{
                       display:'flex',
                       flexDirection:'row',
