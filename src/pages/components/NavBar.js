@@ -28,8 +28,11 @@
     this._menu.show();
     };
         
-    onChange=()=>{
+    onChange=()=>{ 
        this.setState({search:!this.state.search})
+        if(this.state.search){
+            this.search('')
+        }
     }
 
 

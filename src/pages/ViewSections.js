@@ -59,7 +59,7 @@ class ViewSections extends Component {
     
     const params = this.props.navigation.state.params
     const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
-     let searchText = this.props.search
+     let searchText = this.props.search.toLowerCase()
      const filteredSections = searchText 
      ? alumnos.filter(item => {
          return (
@@ -159,8 +159,8 @@ const mapDispatchToProps=(dispatch) => ({
   register:(uid,  values , message, callback)=>
      dispatch(registerAlumno(uid,  values , message, callback)),
 
-  editAlumno: (uid,  uidAlumnno  , values )=>
-     dispatch(editAlumno(uid,  uidAlumnno  , values ))
+  editAlumno: (uid,  uidAlumnno  , values, message )=>
+     dispatch(editAlumno(uid,  uidAlumnno  , values , message))
 })
 
 

@@ -13,7 +13,7 @@ export default class ViewResult extends Component {
   render() {
     console.log('data', this.props.data)
     return (
-      <Container style={{paddingHorizontal:20 }}>
+      <Container style={{paddingLeft:20 }}>
         <Content>
             <Text style={{fontSize:24, textAlign:'center', paddingBottom:15}}>Resultados Obtenidos </Text>
             <View style={{display:'flex' ,  flexDirection:'row', alignItems: 'center',  borderBottomWidth:0.5,
@@ -25,7 +25,7 @@ export default class ViewResult extends Component {
                 marginBottom:10
                 
               }}/>
-              <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estas pruebas son las Iniciales calculadas al momento del Registro </Text>
+              <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estos son los Resultados de las pruebas Realizadas </Text>
             </View >
             { (this.props.data.length > 0) &&
               this.props.data.map( (result ) =>{
@@ -56,7 +56,7 @@ export default class ViewResult extends Component {
                       <Text style={{paddingRight:10, fontWeight:'bold'}}>Tensión Arterial Teorica:</Text>
                       <Text style={{paddingRight:20}}>{result.theoristData}</Text>
                     </View>}
-                   { (result.recomendacion !== '' ) &&  <Text style={{
+                   { (result.recomendacion !== '' && result.recomendacion ) &&  <Text style={{
                       display:'flex',
                       flexDirection:'row',
                       paddingTop:10,
@@ -67,6 +67,19 @@ export default class ViewResult extends Component {
                       <Text style={{ fontWeight:'bold'}}>Recomendacion:  </Text>
                       <Text>{result.recomendacion}</Text>
                     </Text>}
+
+                    { (result.puntos) &&  <Text style={{
+                      display:'flex',
+                      flexDirection:'row',
+                      paddingTop:10,
+                      flexWrap:'wrap',
+                      marginBottom:15
+                    
+                    }}>
+                      <Text style={{ fontWeight:'bold'}}>Puntos:  </Text>
+                      <Text>{result.puntos}</Text>
+                    </Text>}
+
                   </View>
                 )
             })}

@@ -38,17 +38,19 @@ export class getData {
         })        
     }
 
-    verifyUsers(cb){
-        return new Promise( resolve => {
+    verifyUsers(cb, getsection){
+        return new Promise(( resolve , reject) => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    resolve( cb({
+                     cb({
                         email:user.email,
                         uid: user.uid,
                         logeado:true
-                    }))
+                    })
+
+                    resolve(getsection())
                 } else {
-                    resolve( cb({logeado:false}))
+                    resolve(cb({logeado:false}))
                 }
                 
             })
@@ -94,19 +96,18 @@ export class setData extends getData {
             
     }
 
-    editAlumnno =(uid, uidAlumnno, data ,loaded)=>{
+    editAlumnno =(uid, uidAlumnno, data , message , loaded)=>{
         sections.child(uid+"/alumnos/"+uidAlumnno).update({
-            ...data
+            IMC:data
+        }).then( async() =>{
+            console.log('en firebase ', message)
+            result = await calculate.getpeso(data, message)
+            pruebas.child(uidAlumnno+'/medidas_antropometricas').update({
+                 IMC:result
+             })
         }).then( ()=>{  
             loaded()
         })
-
-        // .then( async() =>{
-        //     result = await calculate.getpeso(data, message)
-        //     pruebas.child(key+'/medidas_antropometricas').set({
-        //          IMC:result
-        //      })
-        //  })
     }
 
     editSeccion =(uid, data)=>{
@@ -115,8 +116,8 @@ export class setData extends getData {
         })
     }
 
-    setPruebas= (data, uid )=>{
-        pruebas.child(uid+'/medidas_antropometricas').update({
+    setPruebas= (data, uid, name )=>{
+        pruebas.child(uid+`/${name}`).update({
             ...data,
         })
     }

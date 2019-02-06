@@ -26,7 +26,7 @@ export default class Calculate {
        if (data < rangoPeso[0]) {
          return result ={
            resultado:message.peso1,
-           recomendacion:message.recomendacion1
+           recomendacion:message.recomendacion
          }
        }else if(data < rangoPeso[0] ||  data < rangoPeso[1]){
          return result ={
