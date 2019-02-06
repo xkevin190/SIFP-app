@@ -15,7 +15,7 @@ const defaultvalue={
     peso:'',
     estatura:'',
     cedula:'',
-    sexo:'mujer'
+    sexo:'hombre'
 }
 const validationSchema = yup.object().shape({
     nombre: yup
@@ -64,6 +64,7 @@ export default class RegisterIntegrante extends Component {
     
 
     onSubmit = async (values,{ resetForm}) => { 
+       
         if(this.props.update === null){
             await this.props.register(
                 this.props.uidSection,
@@ -74,16 +75,15 @@ export default class RegisterIntegrante extends Component {
                 }
             )
         }else{
-           
-            this.props.updateAction(
-                this.props.uidSection, 
-                this.props.update.uid,
-                values,
-            )
-            this.props.close()   
-        }
-        console.log(values)
+    
+        await this.props.updateAction(
+            this.props.uidSection, 
+            this.props.update.uid,
+            values,
+            this.props.message,
+        )}
         resetForm(defaultvalue)
+        this.props.close()   
     }
 
     render(){

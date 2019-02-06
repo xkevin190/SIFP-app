@@ -159,8 +159,8 @@ const mapDispatchToProps=(dispatch) => ({
   register:(uid,  values , message, callback)=>
      dispatch(registerAlumno(uid,  values , message, callback)),
 
-  editAlumno: (uid,  uidAlumnno  , values )=>
-     dispatch(editAlumno(uid,  uidAlumnno  , values ))
+  editAlumno: (uid,  uidAlumnno  , values, message )=>
+     dispatch(editAlumno(uid,  uidAlumnno  , values , message))
 })
 
 

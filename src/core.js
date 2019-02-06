@@ -73,45 +73,40 @@ calculateICC = async(data, persona, message )=>{
     }
   
     if(persona.sexo === 'hombre'){
-        if(result < 0.95){
-            obj ={
-              
-                recomendacion:message.recomendacion2,
-                resultado:message.ICC1
-            }
-        }else if(result > 0.95 &&  result < 1){
-            obj={
-                recomendacion:message.recomendacion2,
-                resultado:message.ICC2
-             }
-        }else if(result > 1){
-            obj={
-                recomendacion:message.recomendacion4,
-                resultado:message.ICC3
-
-             }
+        if(result <= 0.95){
+            obj.recomendacion = message.recomendacion2,
+            obj.resultado =message.ICC1
+    
+        }else if(result >= 0.95 &&  result < 1){
+            
+            obj.recomendacion = message.recomendacion2,
+            obj.resultado = message.ICC2
+            
+        }else if(result >= 1){
+        
+            obj.recomendacion = message.recomendacion4,
+            obj.resultado = message.ICC3            
         }
     }else{
         if(result < 0.80){
-            obj ={
-                recomendacion:message.recomendacion2,
-                resultado:message.ICC1
-            }
+
+            obj.recomendacion = message.recomendacion2,
+            obj.resultado =message.ICC1
             
         }else if(result > 0.80 &&  result < 0.85){
-            obj={
-                recomendacion:message.recomendacion2,
-                resultado:message.ICC2
-             }
+            
+            obj.recomendacion = message.recomendacion2,
+            obj.resultado = message.ICC2
+            
         }else if(result > 0.85){
-            obj={
-                recomendacion:message.recomendacion4,
-                resultado:message.ICC3
-             }
+            
+            obj.recomendacion = message.recomendacion2,
+            obj.resultado = message.ICC2
+            
         }  
 
     }
-
+        console.log('otro mas', obj)
     return obj 
 }
 

@@ -25,7 +25,7 @@ export default class ViewResult extends Component {
                 marginBottom:10
                 
               }}/>
-              <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estas pruebas son las Iniciales calculadas al momento del Registro </Text>
+              <Text style={{width:'75%', paddingLeft:10 , paddingBottom:25}}>Estos son los Resultados de las pruebas Realizadas </Text>
             </View >
             { (this.props.data.length > 0) &&
               this.props.data.map( (result ) =>{

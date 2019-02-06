@@ -35,9 +35,12 @@ export const loaded = ()  =>{
     )
   }
 
-  export const editAlumno = (uid,  uidAlumnno  , values , ) => dispatch => { 
+  export const editAlumno = (uid,  uidAlumnno  , values , message ) => dispatch => {
+    console.log('message', uid,  uidAlumnno  , values , message ) 
     dispatch(loading())
-    setActions.editAlumnno(uid , uidAlumnno , values, ()=>
-      dispatch(loaded())  
+     setActions.editAlumnno(uid , uidAlumnno , values, message ,()=>
+      dispatch(loaded())   
     )
+
+    return
   }

@@ -96,19 +96,18 @@ export class setData extends getData {
             
     }
 
-    editAlumnno =(uid, uidAlumnno, data ,loaded)=>{
+    editAlumnno =(uid, uidAlumnno, data , message , loaded)=>{
         sections.child(uid+"/alumnos/"+uidAlumnno).update({
-            ...data
+            IMC:data
+        }).then( async() =>{
+            console.log('en firebase ', message)
+            result = await calculate.getpeso(data, message)
+            pruebas.child(uidAlumnno+'/medidas_antropometricas').update({
+                 IMC:result
+             })
         }).then( ()=>{  
             loaded()
         })
-
-        // .then( async() =>{
-        //     result = await calculate.getpeso(data, message)
-        //     pruebas.child(key+'/medidas_antropometricas').set({
-        //          IMC:result
-        //      })
-        //  })
     }
 
     editSeccion =(uid, data)=>{
