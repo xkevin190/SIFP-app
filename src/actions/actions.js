@@ -10,6 +10,12 @@ export function setState() {
     payload:state
   }
 }
+export function searchData (data){
+  return {
+    type:'SEARCH',
+    payload:data
+  }
+}
 
 const get = new getData()
 export const sectionsData = () => dispatch  =>{
@@ -39,7 +45,17 @@ export const isVerify = () => dispatch  =>{
       type:'VERIFYING',
       payload:data
     })
-  }).then(()=>{
+  } ,
+  ()=>{
+    get.getDataUser( (data) =>{ 
+      dispatch({
+        type:'DATA_SECTIONS',
+        payload:data
+      })
+   }
+  ).then(()=>{
     dispatch({type:'LOADED'})
-  })
+  })}
+  )
 }
+

@@ -26,7 +26,7 @@ class Sections extends Component {
 
 
   componentDidMount(){
-    this.props.getData()
+
     
   }
   
@@ -61,7 +61,7 @@ class Sections extends Component {
   
     const  {setAction} = this.props
     const data = validateData(this.props.jobsGrup)
-    let searchText = this.props.search
+    let searchText = this.props.search.toLowerCase()
      const filteredSections = searchText 
      ? data.filter(item => {
          return (

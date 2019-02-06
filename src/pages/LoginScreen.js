@@ -25,6 +25,10 @@ export default class Equilibrio extends Component {
       visible:false
      }
   }
+   componentDidMount(){
+     this.props.loaded()
+   }
+
   handleSubmit= async(values, {resetForm}) =>{
     this.state.view === 'login'?
     await this.props.login(values , this.props.navigation,
@@ -50,7 +54,7 @@ export default class Equilibrio extends Component {
     if(this.state.visible){
       setTimeout(() => {
         this.setState({visible:false})
-      }, 1000);
+      }, 1);
     }
   }
 

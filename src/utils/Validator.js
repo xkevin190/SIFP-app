@@ -24,6 +24,10 @@ const TitleTest ={
   ICC:'Índice Cintura-Cadera (ICC)',
   IMC:'Índice de Masa Corporal (IMC)',
   TA:'Tensión Arterial (TA)',
+  SA:'Prueba de Sentarse y Alcanzar',
+  FCA:'Flexión de Cadera sin Ayuda',
+  ACSA:'Abducción de Cadera sin Ayuda',
+  FCES:'Flexión de Caderas en Split'
 }
 
 export function TestResultFilter(data, type){

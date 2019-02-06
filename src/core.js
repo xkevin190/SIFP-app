@@ -46,12 +46,22 @@ calculateAntropometricas = async (data, personData, message) => {
    if(TA){ obj.TA = TA}
    if(FC){ obj.FC =FC}
    if(FR){ obj.FR = FR}
-   set.setPruebas( obj ,personData.uid)
+   set.setPruebas( obj ,personData.uid, 'medidas_antropometricas')
 }
 
 calculateFlexibilidadArticular = async(data, personData, message) =>{
+    obj={}
     const SA = await calculateSA(data.SA , personData.sexo , message)
     const FCA = await calculateFCA(data.caderaSA, message)
+    const ACSA = await calculateACSA(data.AbCaderaSA, message)
+    const FCES = await calculateFCES(data.caderasSp, message)
+
+    if(SA){ obj.SA = SA}
+    if(FCA){ obj.FCA = FCA}
+    if(ACSA){ obj.ACSA = ACSA}
+    if(FCES){ obj.FCES = FCES}
+
+    set.setPruebas( obj ,personData.uid ,'flexibilidad_articular')
 }
 
 
@@ -186,35 +196,37 @@ calculateCC =(data, dataPerson, message) =>{
 }
 
   calculateSA = (data, sexo, message) =>{
-    console.log('4', typeof data)
-    let result; 
+    if(data === ''){ return undefined }
+    let result={
+        data: data
+    }; 
     if(sexo === 'hombre'){
-        if(data < -20){result = message.evaluacion1
-        }else if(data > -20 && data <= -9){result = message.evaluacion2
-        }else if(data > -9 && data <= -1 ){result = message.evaluacion3
-        }else if(data >= 0 && data < 6 ){result = message.evaluacion4
-        }else if(data >= 6 && data <=  16 ){result = message.evaluacion5
-        }else if(data >16 && data <= 27 ){result = message.evaluacion6
-        }else if(data> 27){result = message.evaluacion7}
+        if(data < -20){result.resultado = message.evaluacion1
+        }else if(data > -20 && data <= -9){result.resultado  = message.evaluacion2
+        }else if(data > -9 && data <= -1 ){result.resultado  = message.evaluacion3
+        }else if(data >= 0 && data < 6 ){result.resultado  = message.evaluacion4
+        }else if(data >= 6 && data <=  16 ){result.resultado  = message.evaluacion5
+        }else if(data >16 && data <= 27 ){result.resultado  = message.evaluacion6
+        }else if(data> 27){result.resultado  = message.evaluacion7}
  
     }else{
         if(data < -15){result = message.evaluacion1
-        }else if(data > -15 && data <= -8){result = message.evaluacion2
-        }else if(data > -8 && data <= 0 ){result = message.evaluacion3
-        }else if(data >= 0 && data < 11 ){result = message.evaluacion4
-        }else if(data >= 11 && data <=  20 ){result = message.evaluacion5
-        }else if(data > 20 && data <= 30 ){result = message.evaluacion6
-        }else if(data> 30){result = message.evaluacion7 }
+        }else if(data > -15 && data <= -8){result.resultado  = message.evaluacion2
+        }else if(data > -8 && data <= 0 ){result.resultado  = message.evaluacion3
+        }else if(data >= 0 && data < 11 ){result.resultado  = message.evaluacion4
+        }else if(data >= 11 && data <=  20 ){rresult.resultado  = message.evaluacion5
+        }else if(data > 20 && data <= 30 ){result.resultado  = message.evaluacion6
+        }else if(data> 30){result.resultado  = message.evaluacion7 }
     }    
 
-    console.log(result)
+    return result
   }
 
 
   calculateFCA = (data, message) =>{
-    console.log('4', data === '')
+    if(data === ''){ return undefined }
     let result ={
-        data: data,
+        data: data+"°",
     }; 
     if(data < 91){result.resultado = 
         message.evaluacion1
@@ -232,5 +244,56 @@ calculateCC =(data, dataPerson, message) =>{
         result.resultado = message.evaluacion6
         result.puntos = 4
     } 
-    console.log(result)
+     
+    return result
   }
+
+  
+  calculateACSA = (data, message) =>{
+    if(data === ''){ return undefined }
+    let result ={
+        data: data+"°",
+    }; 
+
+    if(data < 91){result.resultado = 
+        message.evaluacion1
+        result.puntos = 0
+    }else if(data > 90 && data <= 106){
+        result.resultado = message.evaluacion2
+        result.puntos = 1
+    }else if(data > 106 && data <= 127 ){
+        result.resultado= message.evaluacion4
+        result.puntos = 2
+    }else if(data > 126 && data <=  145 ){
+        result.resultado = message.evaluacion5
+        result.puntos = 3
+    }else if(data > 145 && data <= 180 ){
+        result.resultado = message.evaluacion6
+        result.puntos = 4
+    } 
+     
+    return result
+  }
+
+  
+  
+  calculateFCES = (data, message) =>{
+    if(data === ''){ return undefined }
+    let result ={
+        data: data+"°",
+    }; 
+
+    if(data < 180){
+        result.resultado = message.evaluacion2
+        result.puntos = 1
+    }else if(data == 180 ){
+        result.resultado= message.evaluacion4
+        result.puntos = 2
+    }else if(data > 180 ){
+        result.resultado = message.evaluacion5
+        result.puntos = 3
+    }    
+    return result
+  }
+
+  

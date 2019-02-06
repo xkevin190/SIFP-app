@@ -3,7 +3,7 @@ import Sections from './Sections'
 import Login from  './LoginScreen'
 import  {setData} from '../firebase/index'
 import {connect} from 'react-redux'
-import {login , register} from '../actions/setActions'
+import {login , register , loaded} from '../actions/setActions'
 
 const auth = new setData()
 
@@ -48,7 +48,9 @@ const mapDispatchToProps=(dispatch) =>({
   login: (values, navigation , callback) =>{
        dispatch(login(values, navigation , callback))
   } ,
-  register: (values, navigation , callback)=>dispatch(register(values, navigation , callback))
+  register: (values, navigation , callback)=>dispatch(register(values, navigation , callback)),
+  loaded:()=>dispatch(loaded())
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (DualComponent)

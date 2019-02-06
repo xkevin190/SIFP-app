@@ -57,7 +57,8 @@ export default class RegisterIntegrante extends Component {
         if(this.state.visible){
           setTimeout(() => {
             this.setState({visible:false})
-          }, 1000);
+            this.forceUpdate()
+          }, 1);
         }
       }
     

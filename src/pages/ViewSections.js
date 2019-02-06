@@ -59,7 +59,7 @@ class ViewSections extends Component {
     
     const params = this.props.navigation.state.params
     const alumnos = GetDataPerson( this.props.alumnos ,  params.key )
-     let searchText = this.props.search
+     let searchText = this.props.search.toLowerCase()
      const filteredSections = searchText 
      ? alumnos.filter(item => {
          return (

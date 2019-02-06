@@ -20,6 +20,7 @@ export default class InputField extends Component {
          <Item stackedLabel   >
             <Label>{label}</Label>
             <Input 
+            style={{width:'100%'}}
             {...rest}
             onChangeText={this._onChange}
             />
